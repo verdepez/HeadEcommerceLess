@@ -17,65 +17,66 @@ const seo = {
 ---
 
 <BaseLayout seo={seo}>
-  <section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 space-y-10">
-    <div class="space-y-2">
-      <span class="text-xs font-black uppercase tracking-widest text-[#FFCC00]">
-        HERRAMIENTA TÉCNICA DOBLETRACCIÓN 4X4
-      </span>
-      <h1 class="text-3xl sm:text-4xl font-black uppercase tracking-tight text-white">
-        Encuentra tu Medida y Calcula Ganancia de Altura
-      </h1>
-      <p class="text-sm text-zinc-400 max-w-3xl">
-        Compara tu neumático original con la nueva medida Off-Road: revisa el diámetro total en
-        pulgadas, cuántos centímetros reales sube el diferencial de tu camioneta y qué nivel de
-        suspensión necesitas.
-      </p>
-    </div>
-
-    <TireCalculatorWidget client:load initialOem="265/65R17" initialUpgrade={selectedMeasure} />
-
-    <div class="space-y-4">
-      <h2 class="text-xl font-black uppercase text-white">
-        Las medidas con mayor demanda en 4x4 y camionetas
-      </h2>
-      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-        {
-          POPULAR_TIRE_MEASURES.map((item) => (
-            <div class="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-5 flex flex-col justify-between space-y-4 hover:border-[#FFCC00] transition-colors">
-              <div>
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-bold uppercase text-zinc-400">Aro {item.rim}</span>
-                  {item.demandTag && (
-                    <span class="rounded bg-[#FFCC00]/15 px-2 py-0.5 text-[10px] font-black uppercase text-[#FFCC00]">
-                      {item.demandTag}
-                    </span>
-                  )}
-                </div>
-                <h3 class="mt-1 text-2xl font-black text-white">{item.measure}</h3>
-                <p class="text-xs font-semibold text-[#FFCC00]">
-                  {item.approxInches} de diámetro
-                </p>
-              </div>
-
-              <div class="flex gap-2">
-                <a
-                  href={`/neumaticos/medidas?medida=${encodeURIComponent(item.measure)}`}
-                  class="flex-1 rounded-xl border border-zinc-700 bg-zinc-950 py-2 px-3 text-center text-xs font-bold text-white hover:border-[#FFCC00]"
-                >
-                  Simular Altura
-                </a>
-                <a
-                  href="/collections/neumaticos"
-                  class="flex-1 rounded-xl bg-[#FFCC00] py-2 px-3 text-center text-xs font-black uppercase text-black hover:bg-[#ffd633]"
-                >
-                  Ver Stock →
-                </a>
-              </div>
-            </div>
-          ))
-        }
+  <div class="home-dark bg-background text-foreground bg-topo bg-topo-invert min-h-screen py-12">
+    <section class="container-dt space-y-10">
+      <div class="space-y-2">
+        <span class="font-button uppercase text-xs tracking-wider text-primary block">
+          HERRAMIENTA TÉCNICA DOBLETRACCIÓN 4X4
+        </span>
+        <h1 class="font-display uppercase text-3xl md:text-5xl tracking-tight text-white">
+          ENCUENTRA TU MEDIDA <span class="text-primary">Y CALCULA ALTURA</span>
+        </h1>
+        <p class="text-sm text-white/70 max-w-3xl">
+          Compara tu neumático original con la nueva medida Off-Road: revisa el diámetro total en
+          pulgadas, cuántos centímetros reales sube el diferencial de tu camioneta y qué nivel de
+          suspensión necesitas.
+        </p>
       </div>
-    </div>
-  </section>
-</BaseLayout>
 
+      <TireCalculatorWidget client:load initialOem="265/65R17" initialUpgrade={selectedMeasure} />
+
+      <div class="space-y-5 pt-4">
+        <h2 class="font-display uppercase text-2xl md:text-3xl text-white">
+          MEDIDAS CON MAYOR DEMANDA <span class="text-primary">EN 4X4 Y CAMIONETAS</span>
+        </h2>
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {
+            POPULAR_TIRE_MEASURES.map((item) => (
+              <div class="border border-white/15 bg-[hsl(var(--brand-black))] p-5 flex flex-col justify-between space-y-4 hover:border-primary transition-colors">
+                <div>
+                  <div class="flex items-center justify-between">
+                    <span class="font-button uppercase text-xs text-white/60">Aro {item.rim}</span>
+                    {item.demandTag && (
+                      <span class="bg-primary text-primary-foreground px-2 py-0.5 font-button uppercase text-[10px] font-bold">
+                        {item.demandTag}
+                      </span>
+                    )}
+                  </div>
+                  <h3 class="mt-2 font-display text-2xl text-white">{item.measure}</h3>
+                  <p class="text-xs font-semibold text-primary">
+                    {item.approxInches} de diámetro
+                  </p>
+                </div>
+
+                <div class="flex gap-2">
+                  <a
+                    href={`/neumaticos/medidas?medida=${encodeURIComponent(item.measure)}`}
+                    class="flex-1 border border-white/20 bg-white/[0.06] py-2 px-3 text-center font-button uppercase text-[11px] text-white hover:border-primary hover:text-primary transition-colors"
+                  >
+                    Simular
+                  </a>
+                  <a
+                    href={`/collections/neumaticos?medida=${encodeURIComponent(item.measure)}`}
+                    class="flex-1 bg-primary py-2 px-3 text-center font-button uppercase text-[11px] font-bold text-primary-foreground hover:brightness-95 transition-colors"
+                  >
+                    Ver Stock →
+                  </a>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

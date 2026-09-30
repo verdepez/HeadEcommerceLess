@@ -49,81 +49,83 @@ const isTireProduct =
       : undefined
   }
 >
-  <article class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 space-y-12">
-    <!-- Breadcrumbs semánticos visibles (alineados con JSON-LD BreadcrumbList) -->
-    {
-      product.breadcrumbs.length > 0 && (
-        <nav aria-label="Breadcrumb">
-          <ol class="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-zinc-400">
-            {product.breadcrumbs.map((crumb, index) => {
-              const isLast = index === product.breadcrumbs.length - 1;
-              return (
-                <li class="flex items-center gap-2">
-                  {index > 0 && <span aria-hidden="true" class="text-zinc-700">/</span>}
-                  {isLast ? (
-                    <span
-                      aria-current="page"
-                      class="font-bold text-[#FFCC00] truncate max-w-[260px]"
-                    >
-                      {crumb.name}
-                    </span>
-                  ) : (
-                    <a href={crumb.path} class="hover:text-white transition-colors">
-                      {crumb.name}
-                    </a>
-                  )}
-                </li>
-              );
-            })}
-          </ol>
-        </nav>
-      )
-    }
+  <div class="home-dark bg-background text-foreground bg-topo bg-topo-invert min-h-screen py-8 md:py-12">
+    <article class="container-dt space-y-12">
+      <!-- Breadcrumbs semánticos visibles (alineados con JSON-LD BreadcrumbList) -->
+      {
+        product.breadcrumbs.length > 0 && (
+          <nav aria-label="Breadcrumb">
+            <ol class="flex flex-wrap items-center gap-2 font-button uppercase text-xs tracking-wider text-white/60">
+              {product.breadcrumbs.map((crumb, index) => {
+                const isLast = index === product.breadcrumbs.length - 1;
+                return (
+                  <li class="flex items-center gap-2">
+                    {index > 0 && <span aria-hidden="true" class="text-white/30">/</span>}
+                    {isLast ? (
+                      <span
+                        aria-current="page"
+                        class="font-bold text-primary truncate max-w-[260px]"
+                      >
+                        {crumb.name}
+                      </span>
+                    ) : (
+                      <a href={crumb.path} class="hover:text-white transition-colors">
+                        {crumb.name}
+                      </a>
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
+          </nav>
+        )
+      }
 
-    <!-- Grid 2 Columnas: Galería Sticky con View Transitions + Detalles e Islas Interactivas -->
-    <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12 items-start">
-      <div class="lg:col-span-6 lg:sticky lg:top-24">
-        <Gallery
-          images={product.images}
-          productTitle={product.title}
-          productSlug={product.slug}
-          aspectRatio="square"
-        />
-      </div>
-
-      <div class="lg:col-span-6">
-        <Details product={product} showExtendedSpecs={true}>
-          <div
-            slot="interactive-actions"
-            class="space-y-4 rounded-2xl border border-zinc-800 bg-zinc-900/90 p-4 sm:p-5"
-          >
-            <VariantPicker
-              client:load
-              variants={product.variants}
-              initialVariantId={initialVariant.id}
-            />
-            <AddToCart
-              client:load
-              productId={product.id}
-              productTitle={product.title}
-              initialVariant={initialVariant}
-            />
-          </div>
-        </Details>
-      </div>
-    </div>
-
-    <!-- Si es un neumático, inyecta automáticamente la Calculadora Visual comparando contra este neumático -->
-    {
-      isTireProduct && (
-        <section aria-label="Comparador de medida de neumático" class="pt-4">
-          <TireCalculatorWidget
-            client:visible
-            initialOem="265/65R17"
-            initialUpgrade={detectedTireMeasure}
+      <!-- Grid 2 Columnas: Galería Sticky con View Transitions + Detalles e Islas Interactivas -->
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12 items-start">
+        <div class="lg:col-span-6 lg:sticky lg:top-28">
+          <Gallery
+            images={product.images}
+            productTitle={product.title}
+            productSlug={product.slug}
+            aspectRatio="square"
           />
-        </section>
-      )
-    }
-  </article>
+        </div>
+
+        <div class="lg:col-span-6">
+          <Details product={product} showExtendedSpecs={true}>
+            <div
+              slot="interactive-actions"
+              class="space-y-4 border border-white/15 bg-[hsl(var(--brand-black))] p-5"
+            >
+              <VariantPicker
+                client:load
+                variants={product.variants}
+                initialVariantId={initialVariant.id}
+              />
+              <AddToCart
+                client:load
+                productId={product.id}
+                productTitle={product.title}
+                initialVariant={initialVariant}
+              />
+            </div>
+          </Details>
+        </div>
+      </div>
+
+      <!-- Si es un neumático, inyecta automáticamente la Calculadora Visual comparando contra este neumático -->
+      {
+        isTireProduct && (
+          <section aria-label="Comparador de medida de neumático" class="pt-4">
+            <TireCalculatorWidget
+              client:visible
+              initialOem="265/65R17"
+              initialUpgrade={detectedTireMeasure}
+            />
+          </section>
+        )
+      }
+    </article>
+  </div>
 </BaseLayout>

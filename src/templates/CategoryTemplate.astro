@@ -9,146 +9,161 @@ interface Props {
 
 const { category } = Astro.props;
 
-// Filtrado opcional en tiempo de ejecución por ?marca= (tal cual funciona en 4x4.cl: ?marca=BFGoodrich, ?marca=Method)
 const brandFilter = Astro.url.searchParams.get('marca')?.trim().toLowerCase();
-const filteredProducts = brandFilter
-  ? category.products.filter(
-      (p) =>
-        p.brand?.toLowerCase().includes(brandFilter) ||
-        p.title.toLowerCase().includes(brandFilter)
-    )
-  : category.products;
+const measureFilter = Astro.url.searchParams.get('medida')?.trim().toLowerCase();
+const queryFilter = Astro.url.searchParams.get('q')?.trim().toLowerCase();
+
+const filteredProducts = category.products.filter((p) => {
+  const haystack = `${p.title} ${p.brand || ''} ${p.sku} ${p.descriptionHtml}`.toLowerCase();
+  if (brandFilter && !haystack.includes(brandFilter)) return false;
+  if (measureFilter && !haystack.includes(measureFilter)) return false;
+  if (queryFilter && !haystack.includes(queryFilter)) return false;
+  return true;
+});
+
+const displayProducts = filteredProducts.length > 0 ? filteredProducts : category.products;
+const activeFilterLabel =
+  Astro.url.searchParams.get('marca') ||
+  Astro.url.searchParams.get('medida') ||
+  Astro.url.searchParams.get('q');
 ---
 
 <BaseLayout seo={category.seo} category={category}>
-  <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
-    <!-- Cabecera de Colección / Categoría con estilo 4x4.cl -->
-    <div class="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-      <div class="space-y-2">
-        <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#FFCC00]">
-          <a href="/" class="text-zinc-400 hover:text-white">Inicio</a>
-          <span class="text-zinc-700">/</span>
-          <span>Colección Oficial 4x4</span>
+  <div class="home-dark bg-background text-foreground bg-topo bg-topo-invert min-h-screen py-10 md:py-14">
+    <div class="container-dt space-y-8">
+      <!-- Cabecera de Colección con estilo 4x4.cl -->
+      <div class="relative bg-[hsl(var(--brand-black))] border border-white/15 p-6 md:p-8 overflow-hidden">
+        <div aria-hidden="true" class="absolute inset-0 pointer-events-none bg-topo-invert opacity-60"></div>
+        <div class="relative flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <nav aria-label="Breadcrumb" class="flex items-center gap-2 font-button uppercase text-xs tracking-wider text-white/60 mb-2">
+              <a href="/" class="hover:text-primary transition-colors">Inicio</a>
+              <span>/</span>
+              <span class="text-primary">Catálogo Oficial 4x4</span>
+            </nav>
+            <h1 class="font-display uppercase text-3xl md:text-5xl tracking-tight text-white leading-none">
+              {category.name}
+              {activeFilterLabel && <span class="text-primary"> · {activeFilterLabel}</span>}
+            </h1>
+            {
+              category.descriptionHtml && (
+                <div
+                  class="mt-3 max-w-3xl text-xs md:text-sm text-white/70 line-clamp-2"
+                  set:html={category.descriptionHtml}
+                />
+              )
+            }
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 shrink-0">
+            {
+              activeFilterLabel && (
+                <a
+                  href={Astro.url.pathname}
+                  class="h-10 px-4 inline-flex items-center border border-white/20 bg-white/[0.06] font-button uppercase text-xs tracking-wider text-white hover:border-primary hover:text-primary transition-colors"
+                >
+                  ✕ Quitar filtro ({activeFilterLabel})
+                </a>
+              )
+            }
+            <span class="h-10 px-4 inline-flex items-center gap-1.5 border border-primary/40 bg-white/[0.05] font-button uppercase text-xs tracking-wider text-white">
+              <strong class="text-primary">{displayProducts.length}</strong> productos en catálogo
+            </span>
+          </div>
         </div>
-        <h1 class="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white">
-          {category.name}
-          {brandFilter && <span class="text-[#FFCC00]"> · {Astro.url.searchParams.get('marca')}</span>}
-        </h1>
-        {
-          category.descriptionHtml && (
-            <div
-              class="max-w-3xl text-xs sm:text-sm text-zinc-400 line-clamp-3"
-              set:html={category.descriptionHtml}
-            />
-          )
-        }
       </div>
 
-      <div class="flex flex-wrap items-center gap-2 shrink-0">
-        {
-          brandFilter && (
-            <a
-              href={Astro.url.pathname}
-              class="rounded-xl border border-zinc-700 bg-zinc-950 px-3.5 py-2 text-xs font-bold text-zinc-300 hover:border-[#FFCC00]"
-            >
-              ✕ Quitar filtro ({Astro.url.searchParams.get('marca')})
-            </a>
-          )
-        }
-        <span class="rounded-xl border border-zinc-800 bg-zinc-950 px-3.5 py-2 text-xs font-bold text-zinc-300">
-          <strong class="text-[#FFCC00]">{filteredProducts.length}</strong> productos disponibles
-        </span>
-      </div>
-    </div>
-
-    <!-- Grid de Productos con View Transitions (transition:name) y CLS = 0 -->
-    {
-      filteredProducts.length === 0 ? (
-        <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 py-16 px-4 text-center space-y-4">
-          <p class="text-base font-bold text-zinc-300">
-            No encontramos productos con ese filtro específico en esta colección.
-          </p>
-          <a
-            href={Astro.url.pathname}
-            class="inline-flex rounded-xl bg-[#FFCC00] px-5 py-2.5 text-xs font-black uppercase text-black"
-          >
-            Ver toda la colección {category.name}
-          </a>
-        </div>
-      ) : (
-        <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 sm:gap-6">
-          {filteredProducts.map((product, idx) => {
-            const cover = product.images[0];
-            const isAboveFold = idx < 4;
-            const href = product.seo.canonicalUrl || `/products/${product.slug}`;
-            const formattedPrice = formatPrice(product.price, product.currency || 'CLP');
-            const formattedCompare = product.compareAtPrice
+      <!-- Grid de Productos con View Transitions y efecto Light Sweep de 4x4.cl -->
+      <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {displayProducts.map((product, idx) => {
+          const cover = product.images[0] || product.featuredImage;
+          const isAboveFold = idx < 4;
+          const href = product.seo.canonicalUrl || `/products/${product.slug}`;
+          const formattedPrice = formatPrice(product.price, product.currency || 'CLP');
+          const formattedCompare =
+            product.compareAtPrice && product.compareAtPrice > product.price
               ? formatPrice(product.compareAtPrice, product.currency || 'CLP')
               : null;
 
-            return (
-              <li class="group flex flex-col rounded-2xl border border-zinc-800 bg-zinc-900/80 overflow-hidden transition-all hover:border-[#FFCC00]/70 hover:shadow-xl">
-                <a href={href} class="flex flex-col flex-1">
-                  <div class="relative aspect-square w-full overflow-hidden bg-white p-3">
-                    {product.compareAtPrice && (
-                      <span class="absolute top-2.5 left-2.5 z-10 rounded bg-[#f04723] px-2 py-0.5 text-[10px] font-black uppercase text-white">
-                        OFERTA
+          return (
+            <li class="group relative flex flex-col overflow-hidden bg-[hsl(var(--brand-charcoal))] border border-white/10 hover:border-primary/70 transition-all duration-300">
+              <a href={href} class="flex flex-col flex-1">
+                <div class="relative aspect-square w-full overflow-hidden bg-white p-4">
+                  {formattedCompare && (
+                    <span class="absolute top-3 left-3 z-10 bg-[hsl(var(--brand-sale))] px-2.5 py-0.5 font-button uppercase text-[10px] tracking-wider font-bold text-white">
+                      OFERTA
+                    </span>
+                  )}
+                  <span
+                    class={`absolute top-3 right-3 z-10 px-2 py-0.5 font-button uppercase text-[10px] tracking-wider font-bold ${
+                      product.availableForSale
+                        ? 'bg-primary text-primary-foreground'
+                        : 'bg-neutral-900 text-white/65'
+                    }`}
+                  >
+                    {product.availableForSale ? 'En Stock' : 'Agotado'}
+                  </span>
+
+                  {cover && (
+                    <img
+                      src={cover.url}
+                      srcset={cover.srcset || undefined}
+                      sizes="(min-width: 1024px) 25vw, 50vw"
+                      alt={cover.alt || product.title}
+                      width={cover.width || 600}
+                      height={cover.height || 600}
+                      loading={isAboveFold ? 'eager' : 'lazy'}
+                      fetchpriority={idx === 0 ? 'high' : 'auto'}
+                      decoding={isAboveFold ? 'sync' : 'async'}
+                      transition:name={`product-image-${product.slug}`}
+                      class="h-full w-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
+                    />
+                  )}
+
+                  <div class="pointer-events-none absolute inset-0 overflow-hidden">
+                    <div class="absolute inset-y-0 -left-1/2 w-1/2 bg-gradient-to-r from-transparent via-white/35 to-transparent opacity-0 group-hover:animate-light-sweep" />
+                  </div>
+                </div>
+
+                <div class="flex flex-1 flex-col justify-between p-5 bg-[hsl(var(--brand-black))] text-white">
+                  <div>
+                    {product.brand && (
+                      <span class="block font-button uppercase text-[10px] tracking-wider text-primary mb-1">
+                        {product.brand}
                       </span>
                     )}
-                    {!product.availableForSale && (
-                      <span class="absolute top-2.5 right-2.5 z-10 rounded bg-zinc-900/90 px-2 py-0.5 text-[10px] font-bold uppercase text-zinc-300">
-                        Agotado
-                      </span>
-                    )}
-                    {cover && (
-                      <img
-                        src={cover.url}
-                        srcset={cover.srcset || undefined}
-                        sizes="(min-width: 1024px) 25vw, 50vw"
-                        alt={cover.alt || product.title}
-                        width={cover.width || 600}
-                        height={cover.height || 600}
-                        loading={isAboveFold ? 'eager' : 'lazy'}
-                        fetchpriority={idx === 0 ? 'high' : 'auto'}
-                        decoding={isAboveFold ? 'sync' : 'async'}
-                        transition:name={`product-image-${product.slug}`}
-                        class="h-full w-full object-contain object-center transition-transform duration-300 group-hover:scale-105"
-                      />
-                    )}
+                    <h2
+                      transition:name={`product-title-${product.slug}`}
+                      class="font-display uppercase text-sm leading-snug text-white line-clamp-2 group-hover:text-primary transition-colors"
+                    >
+                      {product.title}
+                    </h2>
                   </div>
 
-                  <div class="flex flex-1 flex-col justify-between p-4 space-y-3">
-                    <div class="space-y-1">
-                      {product.brand && (
-                        <span class="block text-[10px] font-black uppercase tracking-wider text-[#FFCC00]">
-                          {product.brand}
+                  <div class="mt-4 pt-3 border-t border-white/10 flex items-end justify-between gap-2">
+                    <div>
+                      {formattedCompare && (
+                        <span class="block text-xs text-white/40 line-through">
+                          {formattedCompare}
                         </span>
                       )}
-                      <h2 class="text-xs sm:text-sm font-bold text-white line-clamp-2 group-hover:text-[#FFCC00] transition-colors">
-                        {product.title}
-                      </h2>
-                    </div>
-
-                    <div class="pt-2 border-t border-zinc-800/80 flex items-baseline justify-between gap-2">
-                      <div>
-                        <span class="block text-base sm:text-lg font-black text-[#FFCC00]">
-                          {formattedPrice}
-                        </span>
-                        {formattedCompare && (
-                          <span class="text-xs text-zinc-500 line-through">{formattedCompare}</span>
-                        )}
-                      </div>
-                      <span class="rounded-lg bg-zinc-800 px-2.5 py-1 text-[10px] font-black uppercase text-white group-hover:bg-[#FFCC00] group-hover:text-black transition-colors">
-                        Ver →
+                      <span class="block font-display text-lg text-primary">
+                        {formattedPrice}
+                      </span>
+                      <span class="block text-[10px] text-white/50">
+                        3 cuotas sin interés de {formatPrice(Math.round(product.price / 3), product.currency || 'CLP')}
                       </span>
                     </div>
+                    <span class="h-9 px-3 bg-primary text-primary-foreground font-button uppercase text-[11px] tracking-wider font-bold inline-flex items-center shrink-0">
+                      Ver →
+                    </span>
                   </div>
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      )
-    }
-  </section>
+                </div>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </div>
 </BaseLayout>

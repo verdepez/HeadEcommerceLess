@@ -15,73 +15,74 @@ const seo = {
 ---
 
 <BaseLayout seo={seo}>
-  <section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 space-y-10">
-    <div class="space-y-2">
-      <span class="text-xs font-black uppercase tracking-widest text-[#FFCC00]">
-        GARAGE DOBLETRACCIÓN
-      </span>
-      <h1 class="text-3xl sm:text-4xl font-black uppercase tracking-tight text-white">
-        Acceso rápido a productos compatibles con tu vehículo
-      </h1>
-      <p class="text-sm text-zinc-400">
-        Toca uno de los modelos populares o arma tu selección. Guardaremos tu 4x4 en tu Garage y
-        filtraremos apernadura, kits de levante y medidas de neumáticos compatibles.
-      </p>
-    </div>
-
-    <OffroadSearchHub client:load initialTab="vehicle" />
-
-    <div class="space-y-4 pt-4">
-      <h2 class="text-xl font-black uppercase text-white">
-        Tabla Maestra de Apernaduras y Medidas por Camioneta
-      </h2>
-      <div class="overflow-x-auto rounded-2xl border border-zinc-800 bg-zinc-900/70">
-        <table class="w-full text-left text-xs sm:text-sm text-zinc-300">
-          <thead class="border-b border-zinc-800 bg-zinc-950 text-[11px] font-black uppercase text-zinc-400">
-            <tr>
-              <th class="px-4 py-3.5">Vehículo</th>
-              <th class="px-4 py-3.5">Generación</th>
-              <th class="px-4 py-3.5">Apernadura Llanta</th>
-              <th class="px-4 py-3.5">Neumático OEM</th>
-              <th class="px-4 py-3.5">Máx. con Levante 2&quot;</th>
-              <th class="px-4 py-3.5 text-right">Catálogo</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-zinc-800/80">
-            {
-              VEHICLE_DATABASE.map((v) => (
-                <tr class="hover:bg-zinc-900">
-                  <td class="px-4 py-3 font-black text-white">
-                    {v.brand} {v.model}
-                  </td>
-                  <td class="px-4 py-3 text-zinc-400">{v.generation}</td>
-                  <td class="px-4 py-3">
-                    <a
-                      href={`/collections/${v.boltPatternSlug}`}
-                      class="rounded bg-zinc-800 px-2 py-1 font-mono text-xs font-bold text-[#FFCC00] hover:underline"
-                    >
-                      {v.boltPattern}
-                    </a>
-                  </td>
-                  <td class="px-4 py-3 font-mono">{v.oemTire}</td>
-                  <td class="px-4 py-3 font-mono font-bold text-emerald-400">
-                    {v.maxTireWith2InchLift}
-                  </td>
-                  <td class="px-4 py-3 text-right">
-                    <a
-                      href={`/collections/${v.collectionSlug}`}
-                      class="inline-block rounded-lg bg-[#FFCC00] px-3 py-1.5 text-xs font-black uppercase text-black hover:bg-[#ffd633]"
-                    >
-                      Ver Productos →
-                    </a>
-                  </td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+  <div class="home-dark bg-background text-foreground bg-topo bg-topo-invert min-h-screen py-12">
+    <section class="container-dt space-y-10">
+      <div class="space-y-2">
+        <span class="font-button uppercase text-xs tracking-wider text-primary block">
+          GARAGE DOBLETRACCIÓN 4X4
+        </span>
+        <h1 class="font-display uppercase text-3xl md:text-5xl tracking-tight text-white">
+          EQUIPAMIENTO COMPATIBLE <span class="text-primary">CON TU VEHÍCULO</span>
+        </h1>
+        <p class="text-sm text-white/70 max-w-3xl">
+          Selecciona tu camioneta o 4x4 (marca, modelo y año). Guardaremos tu vehículo en tu Garage
+          personal y filtraremos apernadura, kits de levante y medidas de neumáticos compatibles.
+        </p>
       </div>
-    </div>
-  </section>
-</BaseLayout>
 
+      <OffroadSearchHub client:load initialTab="vehicle" />
+
+      <div class="space-y-4 pt-4">
+        <h2 class="font-display uppercase text-2xl md:text-3xl text-white">
+          TABLA MAESTRA DE APERNADURAS <span class="text-primary">Y MEDIDAS POR CAMIONETA</span>
+        </h2>
+        <div class="overflow-x-auto border border-white/15 bg-[hsl(var(--brand-black))]">
+          <table class="w-full text-left text-xs sm:text-sm text-white/85">
+            <thead class="border-b border-white/15 bg-white/[0.05] font-button uppercase text-[11px] tracking-wider text-primary">
+              <tr>
+                <th class="px-4 py-3.5">Vehículo</th>
+                <th class="px-4 py-3.5">Generación</th>
+                <th class="px-4 py-3.5">Apernadura Llanta</th>
+                <th class="px-4 py-3.5">Neumático OEM</th>
+                <th class="px-4 py-3.5">Máx. con Levante 2&quot;</th>
+                <th class="px-4 py-3.5 text-right">Catálogo</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/10">
+              {
+                VEHICLE_DATABASE.map((v) => (
+                  <tr class="hover:bg-white/[0.04] transition-colors">
+                    <td class="px-4 py-3 font-display uppercase text-white">
+                      {v.brand} {v.model}
+                    </td>
+                    <td class="px-4 py-3 text-white/60">{v.generation}</td>
+                    <td class="px-4 py-3">
+                      <a
+                        href={`/collections/${v.boltPatternSlug}`}
+                        class="inline-block border border-primary/40 bg-white/[0.05] px-2.5 py-1 font-mono text-xs font-bold text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
+                      >
+                        {v.boltPattern}
+                      </a>
+                    </td>
+                    <td class="px-4 py-3 font-mono text-white/80">{v.oemTire}</td>
+                    <td class="px-4 py-3 font-mono font-bold text-primary">
+                      {v.maxTireWith2InchLift}
+                    </td>
+                    <td class="px-4 py-3 text-right">
+                      <a
+                        href={`/collections/${v.collectionSlug}`}
+                        class="inline-block bg-primary px-3.5 py-1.5 font-button uppercase text-xs font-bold text-primary-foreground hover:brightness-95 transition-colors"
+                      >
+                        Ver Productos →
+                      </a>
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
