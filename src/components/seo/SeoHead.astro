@@ -1,5 +1,5 @@
 ---
-import { ClientRouter } from 'astro:transitions';
+import { ViewTransitions } from 'astro:transitions';
 import type { Category, SEOData, UnifiedProduct } from '../../adapters/types';
 import { buildValidatedCanonicalUrl } from '../../config/routing.config';
 import JsonLd from './JsonLd.astro';
@@ -74,7 +74,7 @@ const speculationRulesJson = JSON.stringify({
 <link rel="canonical" href={canonicalHref} />
 
 <!-- Navegación Instantánea tipo App Nativa: View Transitions API + Speculation Rules API -->
-<ClientRouter fallback="swap" />
+<ViewTransitions fallback="swap" />
 <script type="speculationrules" is:inline set:html={speculationRulesJson} />
 
 <!-- Optimización Crítica LCP (< 1.2s): Preload de imagen principal above-the-fold -->

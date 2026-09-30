@@ -10,8 +10,12 @@ import node from '@astrojs/node';
  * - inlineStylesheets: 'always' elimina peticiones bloqueantes de CSS en el camino crítico
  */
 export default defineConfig({
-  site: process.env.PUBLIC_SITE_URL || 'https://tienda-ejemplo.com',
+  site: process.env.PUBLIC_SITE_URL || 'https://dobletraccion.com',
   output: 'server',
+  server: {
+    host: true,
+    port: Number(process.env.PORT) || 4321,
+  },
   adapter: node({
     mode: 'standalone',
   }),
