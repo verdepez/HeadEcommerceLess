@@ -76,7 +76,7 @@ const activeFilterLabel =
       <!-- Grid de Productos con View Transitions y efecto Light Sweep de 4x4.cl -->
       <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {displayProducts.map((product, idx) => {
-          const cover = product.images[0] || product.featuredImage;
+          const cover = product.images[0];
           const isAboveFold = idx < 4;
           const href = product.seo.canonicalUrl || `/products/${product.slug}`;
           const formattedPrice = formatPrice(product.price, product.currency || 'CLP');

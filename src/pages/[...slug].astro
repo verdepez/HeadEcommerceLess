@@ -13,6 +13,21 @@ export const prerender = false;
 const activeCms = getActiveCMS();
 const adapter = getEcommerceAdapter(activeCms);
 
+const COLLECTION_FALLBACK_ALIASES: Record<string, string> = {
+  'ranger-raptor': 'ranger',
+  bronco: 'ford',
+  maverick: 'ford',
+  expedition: 'ford',
+  'land-cruiser': 'toyota',
+  prado: 'toyota',
+  'neumaticos-rt': 'neumaticos-offroad-at-y-mt',
+  '5x150': '5x1502',
+  '6x1143': '6x1144',
+  '8x170': '8x1656',
+  all: 'todas-las-categorias',
+  'levante-y-suspension': 'kit-de-levante-y-suspension',
+};
+
 // 1. Interpretar la ruta solicitada según el esquema del CMS activo (WooCommerce, Shopify o PrestaShop)
 const routeMatch = resolveCMSRoute(Astro.url.pathname, activeCms);
 
@@ -38,6 +53,16 @@ if (!routeMatch) {
     id: routeMatch.id,
     page: pageParam,
   });
+  if (!categoryData) {
+    const aliasSlug = COLLECTION_FALLBACK_ALIASES[routeMatch.slug.toLowerCase()];
+    if (aliasSlug) {
+      categoryData = await adapter.getCategoryBySlug({
+        slug: aliasSlug,
+        id: routeMatch.id,
+        page: pageParam,
+      });
+    }
+  }
   if (!categoryData) {
     isNotFound = true;
   }
@@ -68,37 +93,39 @@ const resolvedProductTemplate =
   isNotFound ? (
     <BaseLayout
       seo={{
-        title: '404 - Página no encontrada',
+        title: '404 - Página no encontrada | DOBLETRACCIÓN 4x4',
         description: 'El producto o categoría que buscas no existe o ya no está disponible.',
         robots: { index: false, follow: false },
       }}
     >
-      <section class="mx-auto max-w-xl px-4 py-24 text-center space-y-5">
-        <p class="text-sm font-mono font-bold uppercase tracking-widest text-[#FFCC00]">
-          HTTP 404 · {activeCms.toUpperCase()} ROUTER
-        </p>
-        <h1 class="text-3xl font-black uppercase tracking-tight text-white">
-          Contenido no encontrado
-        </h1>
-        <p class="text-base text-zinc-400">
-          La URL <code class="rounded bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 font-mono text-xs text-[#FFCC00]">{Astro.url.pathname}</code> no
-          corresponde a ningún recurso activo en el catálogo.
-        </p>
-        <div class="pt-2 flex justify-center gap-3">
-          <a
-            href="/"
-            class="inline-flex items-center justify-center rounded-xl bg-[#FFCC00] px-6 py-3 text-xs font-black uppercase tracking-wider text-black hover:bg-[#ffd633]"
-          >
-            Volver al inicio
-          </a>
-          <a
-            href="/pages/garage-interactivo"
-            class="inline-flex items-center justify-center rounded-xl border border-zinc-700 bg-zinc-900 px-6 py-3 text-xs font-bold uppercase tracking-wider text-white hover:border-[#FFCC00]"
-          >
-            Abrir Garage 4x4
-          </a>
-        </div>
-      </section>
+      <div class="home-dark bg-background text-foreground bg-topo bg-topo-invert py-24">
+        <section class="container-dt max-w-xl text-center space-y-5">
+          <p class="font-button uppercase text-xs tracking-widest text-primary">
+            HTTP 404 · {activeCms.toUpperCase()} ROUTER
+          </p>
+          <h1 class="font-display uppercase text-3xl md:text-5xl tracking-tight text-white">
+            CONTENIDO <span class="text-primary">NO ENCONTRADO</span>
+          </h1>
+          <p class="text-sm text-white/70">
+            La URL <code class="bg-white/10 border border-white/20 px-2 py-0.5 font-mono text-xs text-primary">{Astro.url.pathname}</code> no
+            corresponde a ningún recurso activo en el catálogo.
+          </p>
+          <div class="pt-4 flex flex-wrap justify-center gap-3">
+            <a
+              href="/"
+              class="h-11 px-6 inline-flex items-center justify-center bg-primary font-button text-xs font-bold uppercase tracking-wider text-primary-foreground hover:brightness-95 transition"
+            >
+              Volver al inicio
+            </a>
+            <a
+              href="/pages/garage-interactivo"
+              class="h-11 px-6 inline-flex items-center justify-center border border-white/20 bg-white/[0.06] font-button text-xs font-bold uppercase tracking-wider text-white hover:border-primary hover:text-primary transition"
+            >
+              Abrir Garage 4x4
+            </a>
+          </div>
+        </section>
+      </div>
     </BaseLayout>
   ) : productData ? (
     resolvedProductTemplate === 'minimal' ? (
