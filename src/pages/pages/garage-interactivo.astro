@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import OffroadSearchHub from '../../components/home/OffroadSearchHub';
+import { VEHICLE_DATABASE } from '../../data/offroad-catalog';
+
+export const prerender = false;
+
+const seo = {
+  title: 'Garage interactivo · Encuentra productos 4x4 | DOBLETRACCIÓN',
+  description:
+    'Selecciona tu vehículo (marca, modelo y año) y descubre suspensiones, neumáticos, llantas y accesorios compatibles.',
+  canonicalUrl: '/pages/garage-interactivo',
+  robots: { index: true, follow: true },
+};
+---
+
+<BaseLayout seo={seo}>
+  <section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 space-y-10">
+    <div class="space-y-2">
+      <span class="text-xs font-black uppercase tracking-widest text-[#FFCC00]">
+        GARAGE DOBLETRACCIÓN
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-black uppercase tracking-tight text-white">
+        Acceso rápido a productos compatibles con tu vehículo
+      </h1>
+      <p class="text-sm text-zinc-400">
+        Toca uno de los modelos populares o arma tu selección. Guardaremos tu 4x4 en tu Garage y
+        filtraremos apernadura, kits de levante y medidas de neumáticos compatibles.
+      </p>
+    </div>
+
+    <OffroadSearchHub client:load initialTab="vehicle" />
+
+    <div class="space-y-4 pt-4">
+      <h2 class="text-xl font-black uppercase text-white">
+        Tabla Maestra de Apernaduras y Medidas por Camioneta
+      </h2>
+      <div class="overflow-x-auto rounded-2xl border border-zinc-800 bg-zinc-900/70">
+        <table class="w-full text-left text-xs sm:text-sm text-zinc-300">
+          <thead class="border-b border-zinc-800 bg-zinc-950 text-[11px] font-black uppercase text-zinc-400">
+            <tr>
+              <th class="px-4 py-3.5">Vehículo</th>
+              <th class="px-4 py-3.5">Generación</th>
+              <th class="px-4 py-3.5">Apernadura Llanta</th>
+              <th class="px-4 py-3.5">Neumático OEM</th>
+              <th class="px-4 py-3.5">Máx. con Levante 2&quot;</th>
+              <th class="px-4 py-3.5 text-right">Catálogo</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-800/80">
+            {
+              VEHICLE_DATABASE.map((v) => (
+                <tr class="hover:bg-zinc-900">
+                  <td class="px-4 py-3 font-black text-white">
+                    {v.brand} {v.model}
+                  </td>
+                  <td class="px-4 py-3 text-zinc-400">{v.generation}</td>
+                  <td class="px-4 py-3">
+                    <a
+                      href={`/collections/${v.boltPatternSlug}`}
+                      class="rounded bg-zinc-800 px-2 py-1 font-mono text-xs font-bold text-[#FFCC00] hover:underline"
+                    >
+                      {v.boltPattern}
+                    </a>
+                  </td>
+                  <td class="px-4 py-3 font-mono">{v.oemTire}</td>
+                  <td class="px-4 py-3 font-mono font-bold text-emerald-400">
+                    {v.maxTireWith2InchLift}
+                  </td>
+                  <td class="px-4 py-3 text-right">
+                    <a
+                      href={`/collections/${v.collectionSlug}`}
+                      class="inline-block rounded-lg bg-[#FFCC00] px-3 py-1.5 text-xs font-black uppercase text-black hover:bg-[#ffd633]"
+                    >
+                      Ver Productos →
+                    </a>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

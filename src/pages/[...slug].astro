@@ -1,0 +1,112 @@
+---
+import { getActiveCMS, getEcommerceAdapter } from '../adapters';
+import type { Category, UnifiedProduct } from '../adapters/types';
+import { resolveCMSRoute } from '../config/routing.config';
+import DefaultProductTemplate from '../templates/DefaultProductTemplate.astro';
+import MinimalProductTemplate from '../templates/MinimalProductTemplate.astro';
+import CategoryTemplate from '../templates/CategoryTemplate.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Modo SSR con soporte de caché en el Edge (Cloudflare / CDN) para garantizar LCP < 1.2s
+export const prerender = false;
+
+const activeCms = getActiveCMS();
+const adapter = getEcommerceAdapter(activeCms);
+
+// 1. Interpretar la ruta solicitada según el esquema del CMS activo (WooCommerce, Shopify o PrestaShop)
+const routeMatch = resolveCMSRoute(Astro.url.pathname, activeCms);
+
+let productData: UnifiedProduct | null = null;
+let categoryData: Category | null = null;
+let isNotFound = false;
+
+if (!routeMatch) {
+  isNotFound = true;
+} else if (routeMatch.entityType === 'product') {
+  productData = await adapter.getProductBySlug({
+    slug: routeMatch.slug,
+    id: routeMatch.id,
+    categorySlug: routeMatch.categorySlug,
+  });
+  if (!productData) {
+    isNotFound = true;
+  }
+} else if (routeMatch.entityType === 'category') {
+  const pageParam = Number(Astro.url.searchParams.get('page') || '1') || 1;
+  categoryData = await adapter.getCategoryBySlug({
+    slug: routeMatch.slug,
+    id: routeMatch.id,
+    page: pageParam,
+  });
+  if (!categoryData) {
+    isNotFound = true;
+  }
+}
+
+// 2. Emitir respuesta HTTP 404 estricta si la ruta o la entidad no existen en el CMS
+if (isNotFound) {
+  Astro.response.status = 404;
+  Astro.response.statusText = 'Not Found';
+  Astro.response.headers.set('Cache-Control', 'no-store, max-age=0');
+} else {
+  // Cabeceras SWR para servir desde el Edge en < 50ms (clave para LCP < 1.2s)
+  Astro.response.headers.set(
+    'Cache-Control',
+    'public, s-maxage=3600, stale-while-revalidate=86400'
+  );
+}
+
+// Permitir previsualización o cambio de plantilla por query param (?template=minimal) o por configuración del producto
+const requestedTemplate = Astro.url.searchParams.get('template');
+const resolvedProductTemplate =
+  requestedTemplate === 'minimal' || requestedTemplate === 'default'
+    ? requestedTemplate
+    : productData?.template || 'default';
+---
+
+{
+  isNotFound ? (
+    <BaseLayout
+      seo={{
+        title: '404 - Página no encontrada',
+        description: 'El producto o categoría que buscas no existe o ya no está disponible.',
+        robots: { index: false, follow: false },
+      }}
+    >
+      <section class="mx-auto max-w-xl px-4 py-24 text-center space-y-5">
+        <p class="text-sm font-mono font-bold uppercase tracking-widest text-[#FFCC00]">
+          HTTP 404 · {activeCms.toUpperCase()} ROUTER
+        </p>
+        <h1 class="text-3xl font-black uppercase tracking-tight text-white">
+          Contenido no encontrado
+        </h1>
+        <p class="text-base text-zinc-400">
+          La URL <code class="rounded bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 font-mono text-xs text-[#FFCC00]">{Astro.url.pathname}</code> no
+          corresponde a ningún recurso activo en el catálogo.
+        </p>
+        <div class="pt-2 flex justify-center gap-3">
+          <a
+            href="/"
+            class="inline-flex items-center justify-center rounded-xl bg-[#FFCC00] px-6 py-3 text-xs font-black uppercase tracking-wider text-black hover:bg-[#ffd633]"
+          >
+            Volver al inicio
+          </a>
+          <a
+            href="/pages/garage-interactivo"
+            class="inline-flex items-center justify-center rounded-xl border border-zinc-700 bg-zinc-900 px-6 py-3 text-xs font-bold uppercase tracking-wider text-white hover:border-[#FFCC00]"
+          >
+            Abrir Garage 4x4
+          </a>
+        </div>
+      </section>
+    </BaseLayout>
+  ) : productData ? (
+    resolvedProductTemplate === 'minimal' ? (
+      <MinimalProductTemplate product={productData} />
+    ) : (
+      <DefaultProductTemplate product={productData} />
+    )
+  ) : categoryData ? (
+    <CategoryTemplate category={categoryData} />
+  ) : null
+}

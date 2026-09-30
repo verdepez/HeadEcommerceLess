@@ -1,0 +1,381 @@
+---
+import type { Category, SEOData, UnifiedProduct } from '../adapters/types';
+import SeoHead from '../components/seo/SeoHead.astro';
+import { BRANCHES_4X4, WHEEL_BOLT_PATTERNS } from '../data/offroad-catalog';
+
+interface Props {
+  seo: SEOData;
+  product?: UnifiedProduct;
+  category?: Category;
+  lcpImage?: {
+    url: string;
+    srcset?: string;
+    sizes?: string;
+  };
+}
+
+const { seo, product, category, lcpImage } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es-CL" class="scroll-smooth antialiased bg-zinc-950 text-zinc-100">
+  <head>
+    <SeoHead seo={seo} product={product} category={category} lcpImage={lcpImage} />
+    <style is:global>
+      @view-transition {
+        navigation: auto;
+      }
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation-duration: 160ms;
+        animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col selection:bg-[#FFCC00] selection:text-black">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded-lg focus:bg-[#FFCC00] focus:px-4 focus:py-2 focus:text-xs focus:font-black focus:text-black"
+    >
+      Saltar al contenido
+    </a>
+
+    <!-- TOP BAR DE SUCURSALES Y CONTACTO (Idéntica a 4x4.cl) -->
+    <div class="border-b border-zinc-800/80 bg-black text-[11px] font-semibold text-zinc-400">
+      <div class="mx-auto flex h-9 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-4 overflow-x-auto no-scrollbar">
+          <span class="font-bold uppercase tracking-wider text-[#FFCC00]">Sucursales:</span>
+          <a href="#sucursales" class="hover:text-white transition-colors shrink-0">
+            Las Condes · Casa Matriz
+          </a>
+          <span class="text-zinc-700">·</span>
+          <a href="#sucursales" class="hover:text-white transition-colors shrink-0">
+            Concepción
+          </a>
+          <span class="text-zinc-700">·</span>
+          <a href="#sucursales" class="hover:text-white transition-colors shrink-0">
+            La Serena
+          </a>
+        </div>
+
+        <div class="hidden md:flex items-center gap-5">
+          <a href="/neumaticos/medidas" class="hover:text-[#FFCC00] transition-colors">
+            Calculadora de Medidas
+          </a>
+          <a href="/pages/garage-interactivo" class="hover:text-[#FFCC00] transition-colors">
+            Garage Interactivo
+          </a>
+          <a href="tel:+56233399330" class="font-bold text-white hover:text-[#FFCC00]">
+            +56 2 3339 9330
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- HEADER PRINCIPAL CON MEGA-MENÚ TÉCNICO 0-JS Y BADGE DE MI GARAGE (CLS = 0) -->
+    <header class="sticky top-0 z-40 h-16 w-full border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-md">
+      <div class="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 gap-4">
+        <!-- Logo DOBLETRACCIÓN 4x4 -->
+        <a href="/" class="flex items-center gap-2 shrink-0 group">
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded bg-[#FFCC00] font-black text-black text-sm tracking-tighter">
+            4X4
+          </span>
+          <div class="flex flex-col leading-none">
+            <span class="text-base sm:text-lg font-black tracking-tight text-white group-hover:text-[#FFCC00] transition-colors">
+              DOBLETRACCIÓN
+            </span>
+            <span class="text-[9px] font-bold uppercase tracking-widest text-zinc-400">
+              EQUIPAMIENTO OFF-ROAD CHILE
+            </span>
+          </div>
+        </a>
+
+        <!-- MEGA-MENÚ TÉCNICO (Suspensión | Neumáticos | Llantas | Más | Ofertas | Proyectos) -->
+        <nav aria-label="Menú técnico 4x4" class="hidden lg:flex items-center gap-1">
+          <!-- 1. SUSPENSIÓN -->
+          <div class="group relative py-4">
+            <a
+              href="/collections/kit-de-levante-y-suspension"
+              class="px-3 py-2 text-xs font-black uppercase tracking-wider text-zinc-200 group-hover:text-[#FFCC00] transition-colors"
+            >
+              Suspensión ▾
+            </a>
+            <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-150 absolute left-0 top-full w-[540px] rounded-2xl border border-zinc-800 bg-zinc-950 p-5 shadow-2xl grid grid-cols-2 gap-6">
+              <div>
+                <p class="text-[11px] font-black uppercase tracking-wider text-[#FFCC00] mb-2.5">
+                  Categorías de Suspensión
+                </p>
+                <ul class="space-y-1.5 text-xs font-semibold text-zinc-300">
+                  <li><a href="/collections/kit-de-suspension" class="hover:text-[#FFCC00] block py-0.5">Kit de Suspensión</a></li>
+                  <li><a href="/collections/kit-de-levante-y-suspension" class="hover:text-[#FFCC00] block py-0.5">Kit de Levante</a></li>
+                  <li><a href="/collections/leveling" class="hover:text-[#FFCC00] block py-0.5">Leveling</a></li>
+                  <li><a href="/collections/bandeja-de-suspension" class="hover:text-[#FFCC00] block py-0.5">Bandeja de Suspensión</a></li>
+                  <li><a href="/collections/amortiguador-de-direccion" class="hover:text-[#FFCC00] block py-0.5">Amortiguador de Dirección</a></li>
+                  <li><a href="/collections/air-lift" class="hover:text-[#FFCC00] block py-0.5">Pulmones de Aire</a></li>
+                  <li><a href="/collections/espirales-y-ballestas" class="hover:text-[#FFCC00] block py-0.5">Espirales y Ballestas</a></li>
+                  <li><a href="/collections/espaciadores" class="hover:text-[#FFCC00] block py-0.5">Espaciadores</a></li>
+                </ul>
+              </div>
+              <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 flex flex-col justify-between">
+                <div class="space-y-2">
+                  <p class="text-[11px] font-black uppercase tracking-wider text-white">
+                    Filtrar por Altura de Levante
+                  </p>
+                  <a
+                    href="/collections/kit-de-suspension"
+                    class="block rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-xs font-bold text-white hover:border-[#FFCC00]"
+                  >
+                    0 a 2&quot; de Levante (OEM+ / Leveling)
+                  </a>
+                  <a
+                    href="/collections/kit-de-suspension"
+                    class="block rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-xs font-bold text-white hover:border-[#FFCC00]"
+                  >
+                    2.5 a 4&quot; de Levante (Extreme Off-Road)
+                  </a>
+                </div>
+                <a
+                  href="/collections/kit-de-levante-y-suspension"
+                  class="mt-4 inline-block text-xs font-black uppercase text-[#FFCC00] hover:underline"
+                >
+                  Ver todo Suspensión →
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. NEUMÁTICOS -->
+          <div class="group relative py-4">
+            <a
+              href="/collections/neumaticos"
+              class="px-3 py-2 text-xs font-black uppercase tracking-wider text-zinc-200 group-hover:text-[#FFCC00] transition-colors"
+            >
+              Neumáticos ▾
+            </a>
+            <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-150 absolute left-0 top-full w-[560px] rounded-2xl border border-zinc-800 bg-zinc-950 p-5 shadow-2xl grid grid-cols-2 gap-6">
+              <div>
+                <p class="text-[11px] font-black uppercase tracking-wider text-[#FFCC00] mb-2.5">
+                  Por Terreno y Accesorios
+                </p>
+                <ul class="space-y-1.5 text-xs font-semibold text-zinc-300">
+                  <li><a href="/collections/neumaticos" class="hover:text-[#FFCC00] block py-0.5">Neumáticos AT (All-Terrain)</a></li>
+                  <li><a href="/collections/neumaticos-offroad-at-y-mt" class="hover:text-[#FFCC00] block py-0.5">Neumáticos MT (Mud-Terrain)</a></li>
+                  <li><a href="/collections/neumaticos-rt" class="hover:text-[#FFCC00] block py-0.5">Neumáticos RT (Rugged-Terrain)</a></li>
+                  <li><a href="/collections/accesorios-llantas-y-neumaticos" class="hover:text-[#FFCC00] block py-0.5">Accesorios Llantas y Neumáticos</a></li>
+                  <li><a href="/collections/infladores-y-desinfladores" class="hover:text-[#FFCC00] block py-0.5">Infladores y Desinfladores</a></li>
+                  <li><a href="/collections/tuercas-y-valvulas" class="hover:text-[#FFCC00] block py-0.5">Tuercas y Válvulas</a></li>
+                </ul>
+              </div>
+              <div class="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 flex flex-col justify-between">
+                <div>
+                  <p class="text-[11px] font-black uppercase tracking-wider text-white mb-2">
+                    Filtrar por Marca
+                  </p>
+                  <div class="grid grid-cols-2 gap-2">
+                    {['BFGoodrich', 'Maxxis', 'Falken', 'Cooper'].map((brand) => (
+                      <a
+                        href={`/collections/neumaticos?marca=${brand}`}
+                        class="rounded-lg border border-zinc-700 bg-zinc-950 px-2.5 py-1.5 text-center text-xs font-bold text-zinc-200 hover:border-[#FFCC00] hover:text-[#FFCC00]"
+                      >
+                        {brand}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+                <a
+                  href="/neumaticos/medidas"
+                  class="mt-4 block rounded-lg bg-[#FFCC00] px-3 py-2 text-center text-xs font-black uppercase text-black hover:bg-[#ffd633]"
+                >
+                  Calculadora y Medidas →
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. LLANTAS -->
+          <div class="group relative py-4">
+            <a
+              href="/collections/llantas"
+              class="px-3 py-2 text-xs font-black uppercase tracking-wider text-zinc-200 group-hover:text-[#FFCC00] transition-colors"
+            >
+              Llantas ▾
+            </a>
+            <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-150 absolute -left-24 top-full w-[640px] rounded-2xl border border-zinc-800 bg-zinc-950 p-5 shadow-2xl space-y-4">
+              <div class="flex items-center justify-between">
+                <p class="text-[11px] font-black uppercase tracking-wider text-[#FFCC00]">
+                  Selecciona por Apernadura
+                </p>
+                <a href="/collections/llantas" class="text-xs font-bold text-zinc-400 hover:text-white">
+                  Ver todas las Llantas →
+                </a>
+              </div>
+              <div class="grid grid-cols-4 gap-2">
+                {WHEEL_BOLT_PATTERNS.map((bp) => (
+                  <a
+                    href={`/collections/${bp.slug}`}
+                    class="rounded-lg border border-zinc-800 bg-zinc-900 px-2.5 py-1.5 text-xs font-bold text-zinc-200 hover:border-[#FFCC00] hover:text-[#FFCC00]"
+                  >
+                    APERNADURA {bp.label}
+                  </a>
+                ))}
+              </div>
+              <div class="flex items-center justify-between border-t border-zinc-800 pt-3">
+                <span class="text-[11px] font-bold uppercase text-zinc-400">Marcas destacadas:</span>
+                <div class="flex gap-2">
+                  {['Method', 'Fuel', 'KMC', 'Black Rhino'].map((brand) => (
+                    <a
+                      href={`/collections/llantas?marca=${encodeURIComponent(brand)}`}
+                      class="rounded bg-zinc-900 px-2.5 py-1 text-xs font-bold text-white hover:bg-[#FFCC00] hover:text-black"
+                    >
+                      {brand}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. MÁS CATEGORÍAS -->
+          <div class="group relative py-4">
+            <a
+              href="/collections/all"
+              class="px-3 py-2 text-xs font-black uppercase tracking-wider text-zinc-200 group-hover:text-[#FFCC00] transition-colors"
+            >
+              Más ▾
+            </a>
+            <div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-150 absolute left-0 top-full w-64 rounded-2xl border border-zinc-800 bg-zinc-950 p-4 shadow-2xl">
+              <ul class="space-y-1.5 text-xs font-semibold text-zinc-300">
+                <li><a href="/collections/desempeno" class="hover:text-[#FFCC00] block py-1">Desempeño (Escapes / Admisión / Chip)</a></li>
+                <li><a href="/collections/pick-up" class="hover:text-[#FFCC00] block py-1">Pick-Up &amp; Tapas</a></li>
+                <li><a href="/collections/exterior" class="hover:text-[#FFCC00] block py-1">Exterior y Parachoques</a></li>
+                <li><a href="/collections/interior" class="hover:text-[#FFCC00] block py-1">Interior</a></li>
+                <li><a href="/collections/iluminacion" class="hover:text-[#FFCC00] block py-1">Iluminación Off-Road</a></li>
+                <li><a href="/collections/outdoor-y-lifestyle" class="hover:text-[#FFCC00] block py-1">Outdoor y Lifestyle</a></li>
+                <li><a href="/collections/winches-y-recuperacion" class="hover:text-[#FFCC00] block py-1">Winches y Recuperación ARB</a></li>
+                <li><a href="/collections/utv" class="hover:text-[#FFCC00] block py-1">UTV</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <a
+            href="/collections/kit-de-levante"
+            class="px-3 py-2 text-xs font-black uppercase tracking-wider text-red-400 hover:text-red-300 transition-colors"
+          >
+            Ofertas
+          </a>
+        </nav>
+
+        <!-- Acciones derechas: Indicador de Mi Garage + Carrito -->
+        <div class="flex items-center gap-2.5">
+          <a
+            href="/pages/garage-interactivo"
+            class="inline-flex items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-xs font-bold text-zinc-200 hover:border-[#FFCC00] hover:text-[#FFCC00] transition-colors"
+          >
+            <span class="h-2 w-2 rounded-full bg-[#FFCC00]" />
+            <span id="header-garage-label" class="truncate max-w-[150px]">
+              Mi Garage (Elegir 4x4)
+            </span>
+          </a>
+
+          <span
+            id="header-cart-badge"
+            class="inline-flex items-center gap-1.5 rounded-xl bg-[#FFCC00] px-3 py-1.5 text-xs font-black uppercase text-black"
+          >
+            <span>Carro</span>
+            <span
+              id="header-cart-count"
+              class="rounded-full bg-black px-1.5 py-0.5 text-[11px] font-black text-[#FFCC00]"
+            >
+              0
+            </span>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+
+    <!-- FOOTER TÉCNICO COMPLETO DE 4X4.CL / DOBLETRACCIÓN -->
+    <footer class="border-t border-zinc-800 bg-black pt-14 pb-10 text-xs text-zinc-400">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
+        <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
+          <!-- Columna Marca -->
+          <div class="lg:col-span-2 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="inline-flex h-7 w-7 items-center justify-center rounded bg-[#FFCC00] font-black text-black text-xs">
+                4X4
+              </span>
+              <span class="text-base font-black tracking-tight text-white">
+                DOBLETRACCIÓN 4X4
+              </span>
+            </div>
+            <p class="text-zinc-400 leading-relaxed max-w-sm">
+              Taller especialista en equipamiento 4x4. Las mejores marcas off-road (Fox, Old Man
+              Emu, BFGoodrich, Method, ARB), instalación profesional y respaldo técnico en Chile.
+            </p>
+            <div class="flex flex-wrap gap-2 pt-1 text-[11px] font-bold text-zinc-300">
+              <span class="rounded border border-zinc-800 bg-zinc-900 px-2.5 py-1">✓ Garantía oficial</span>
+              <span class="rounded border border-zinc-800 bg-zinc-900 px-2.5 py-1">✓ Instalación en sucursal</span>
+              <span class="rounded border border-zinc-800 bg-zinc-900 px-2.5 py-1">✓ Despacho a todo Chile</span>
+            </div>
+          </div>
+
+          <!-- Tienda -->
+          <div>
+            <h3 class="text-xs font-black uppercase tracking-wider text-white mb-3">Tienda</h3>
+            <ul class="space-y-2">
+              <li><a href="/collections/kit-de-levante-y-suspension" class="hover:text-[#FFCC00]">Levante y Suspensión</a></li>
+              <li><a href="/collections/neumaticos" class="hover:text-[#FFCC00]">Neumáticos AT / MT / RT</a></li>
+              <li><a href="/collections/llantas" class="hover:text-[#FFCC00]">Llantas Off-Road</a></li>
+              <li><a href="/collections/exterior" class="hover:text-[#FFCC00]">Exterior y Parachoques</a></li>
+              <li><a href="/collections/winches-y-recuperacion" class="hover:text-[#FFCC00]">Winches y Recuperación</a></li>
+              <li><a href="/collections/iluminacion" class="hover:text-[#FFCC00]">Iluminación LED</a></li>
+            </ul>
+          </div>
+
+          <!-- Herramientas Interactivas -->
+          <div>
+            <h3 class="text-xs font-black uppercase tracking-wider text-[#FFCC00] mb-3">
+              Herramientas 4x4
+            </h3>
+            <ul class="space-y-2">
+              <li><a href="/neumaticos/medidas" class="hover:text-white font-semibold text-zinc-200">Medidas y Calculadora de Neumáticos</a></li>
+              <li><a href="/pages/garage-interactivo" class="hover:text-white font-semibold text-zinc-200">Garage Interactivo por Vehículo</a></li>
+              <li><a href="/sitemap.xml" class="hover:text-white">Sitemap XML Dinámico</a></li>
+            </ul>
+          </div>
+
+          <!-- Sucursales Resumen -->
+          <div>
+            <h3 class="text-xs font-black uppercase tracking-wider text-white mb-3">
+              3 Sucursales en Chile
+            </h3>
+            <ul class="space-y-2.5">
+              {BRANCHES_4X4.map((b) => (
+                <li>
+                  <p class="font-bold text-zinc-200">{b.city}</p>
+                  <p class="text-[11px] text-zinc-500">{b.address}</p>
+                  <a href={b.whatsappHref} class="text-[11px] font-bold text-[#FFCC00] hover:underline">
+                    WhatsApp {b.phone} →
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div class="border-t border-zinc-900 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-zinc-500">
+          <p>
+            © {new Date().getFullYear()} Dobletracción SpA · RUT 76.920.701-5 · Av. Las Condes
+            9285-B, Las Condes, Santiago · Facturación electrónica disponible.
+          </p>
+          <p class="font-mono text-zinc-400">
+            ASTRO SSR HEADLESS · VIEW TRANSITIONS · LCP &lt; 1.2s · CLS = 0
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

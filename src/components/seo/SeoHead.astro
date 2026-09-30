@@ -1,0 +1,142 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import type { Category, SEOData, UnifiedProduct } from '../../adapters/types';
+import { buildValidatedCanonicalUrl } from '../../config/routing.config';
+import JsonLd from './JsonLd.astro';
+
+interface Props {
+  seo: SEOData;
+  product?: UnifiedProduct;
+  category?: Category;
+  /** Pre-carga de la imagen candidata a LCP en el <head> para lograr LCP < 1.2s */
+  lcpImage?: {
+    url: string;
+    srcset?: string;
+    sizes?: string;
+  };
+}
+
+const { seo, product, category, lcpImage } = Astro.props;
+
+const siteOrigin = (
+  import.meta.env.PUBLIC_SITE_URL ||
+  Astro.site?.toString() ||
+  Astro.url.origin
+).replace(/\/+$/, '');
+
+const canonicalHref = buildValidatedCanonicalUrl(
+  siteOrigin,
+  seo.canonicalUrl || Astro.url.pathname
+);
+
+const robotsDirectives = [
+  seo.robots?.index === false ? 'noindex' : 'index',
+  seo.robots?.follow === false ? 'nofollow' : 'follow',
+  'max-image-preview:large',
+  'max-snippet:-1',
+  'max-video-preview:-1',
+].join(', ');
+
+const ogImageUrl = seo.ogImage?.url
+  ? seo.ogImage.url.startsWith('http')
+    ? seo.ogImage.url
+    : buildValidatedCanonicalUrl(siteOrigin, seo.ogImage.url)
+  : undefined;
+
+const speculationRulesJson = JSON.stringify({
+  prerender: [
+    {
+      where: {
+        and: [
+          { href_matches: '/*' },
+          { not: { href_matches: '/cart*' } },
+          { not: { href_matches: '/auth*' } },
+        ],
+      },
+      eagerness: 'moderate',
+    },
+  ],
+  prefetch: [
+    {
+      where: { href_matches: '/*' },
+      eagerness: 'conservative',
+    },
+  ],
+});
+---
+
+<!-- Metadatos Estándar y Control de Rastreo -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>{seo.title}</title>
+<meta name="description" content={seo.description} />
+<meta name="robots" content={robotsDirectives} />
+<link rel="canonical" href={canonicalHref} />
+
+<!-- Navegación Instantánea tipo App Nativa: View Transitions API + Speculation Rules API -->
+<ClientRouter fallback="swap" />
+<script type="speculationrules" is:inline set:html={speculationRulesJson} />
+
+<!-- Optimización Crítica LCP (< 1.2s): Preload de imagen principal above-the-fold -->
+{
+  lcpImage && (
+    <link
+      rel="preload"
+      as="image"
+      href={lcpImage.url}
+      imagesrcset={lcpImage.srcset || undefined}
+      imagesizes={lcpImage.sizes || '(min-width: 1024px) 50vw, 100vw'}
+      fetchpriority="high"
+    />
+  )
+}
+
+<!-- Open Graph Completo -->
+<meta property="og:locale" content="es_CL" />
+<meta property="og:site_name" content="DOBLETRACCIÓN 4x4" />
+<meta property="og:type" content={seo.ogType || (product ? 'product' : 'website')} />
+<meta property="og:title" content={seo.title} />
+<meta property="og:description" content={seo.description} />
+<meta property="og:url" content={canonicalHref} />
+{
+  ogImageUrl && (
+    <>
+      <meta property="og:image" content={ogImageUrl} />
+      {seo.ogImage?.width && (
+        <meta property="og:image:width" content={String(seo.ogImage.width)} />
+      )}
+      {seo.ogImage?.height && (
+        <meta property="og:image:height" content={String(seo.ogImage.height)} />
+      )}
+      {seo.ogImage?.alt && <meta property="og:image:alt" content={seo.ogImage.alt} />}
+    </>
+  )
+}
+
+<!-- Metadatos Open Graph específicos de E-Commerce -->
+{
+  product && (
+    <>
+      <meta property="product:price:amount" content={String(Math.round(product.price))} />
+      <meta property="product:price:currency" content={product.currency || 'CLP'} />
+      <meta
+        property="product:availability"
+        content={product.availableForSale ? 'in stock' : 'out of stock'}
+      />
+      {product.brand && <meta property="product:brand" content={product.brand} />}
+      <meta property="product:retailer_item_id" content={product.sku} />
+    </>
+  )
+}
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content={seo.twitterCard || 'summary_large_image'} />
+<meta name="twitter:title" content={seo.title} />
+<meta name="twitter:description" content={seo.description} />
+{ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+
+<!-- Sitemap Discovery -->
+<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+
+<!-- Inyección de Datos Estructurados Schema.org JSON-LD -->
+<JsonLd siteOrigin={siteOrigin} product={product} category={category} />

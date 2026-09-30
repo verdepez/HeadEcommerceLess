@@ -1,0 +1,67 @@
+---
+import type { UnifiedProduct } from '../adapters/types';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Gallery from '../components/product/Gallery.astro';
+import Details from '../components/product/Details.astro';
+import VariantPicker from '../components/product/VariantPicker';
+import AddToCart from '../components/product/AddToCart';
+
+interface Props {
+  product: UnifiedProduct;
+}
+
+const { product } = Astro.props;
+const initialVariant = product.variants[0] || {
+  id: product.id,
+  sku: product.sku,
+  title: product.title,
+  price: product.price,
+  currency: product.currency || 'CLP',
+  availableForSale: product.availableForSale,
+  stockStatus: product.stockStatus,
+  attributes: {},
+};
+
+const primaryImage = product.images[0];
+---
+
+<BaseLayout
+  seo={product.seo}
+  product={product}
+  lcpImage={
+    primaryImage
+      ? {
+          url: primaryImage.url,
+          srcset: primaryImage.srcset,
+          sizes: '(min-width: 768px) 672px, 100vw',
+        }
+      : undefined
+  }
+>
+  <article class="mx-auto max-w-2xl px-4 py-10 sm:px-6">
+    <div class="mb-8">
+      <Gallery
+        images={product.images}
+        productTitle={product.title}
+        productSlug={product.slug}
+        aspectRatio="portrait"
+      />
+    </div>
+
+    <Details product={product} showExtendedSpecs={false}>
+      <div slot="interactive-actions" class="py-4 border-y border-zinc-800 space-y-4">
+        <VariantPicker
+          client:visible
+          variants={product.variants}
+          initialVariantId={initialVariant.id}
+        />
+        <AddToCart
+          client:visible
+          productId={product.id}
+          productTitle={product.title}
+          initialVariant={initialVariant}
+        />
+      </div>
+    </Details>
+  </article>
+</BaseLayout>

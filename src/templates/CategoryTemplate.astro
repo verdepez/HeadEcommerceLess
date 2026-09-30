@@ -1,0 +1,154 @@
+---
+import type { Category } from '../adapters/types';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatPrice } from '../utils/formatters';
+
+interface Props {
+  category: Category;
+}
+
+const { category } = Astro.props;
+
+// Filtrado opcional en tiempo de ejecución por ?marca= (tal cual funciona en 4x4.cl: ?marca=BFGoodrich, ?marca=Method)
+const brandFilter = Astro.url.searchParams.get('marca')?.trim().toLowerCase();
+const filteredProducts = brandFilter
+  ? category.products.filter(
+      (p) =>
+        p.brand?.toLowerCase().includes(brandFilter) ||
+        p.title.toLowerCase().includes(brandFilter)
+    )
+  : category.products;
+---
+
+<BaseLayout seo={category.seo} category={category}>
+  <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+    <!-- Cabecera de Colección / Categoría con estilo 4x4.cl -->
+    <div class="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="space-y-2">
+        <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#FFCC00]">
+          <a href="/" class="text-zinc-400 hover:text-white">Inicio</a>
+          <span class="text-zinc-700">/</span>
+          <span>Colección Oficial 4x4</span>
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white">
+          {category.name}
+          {brandFilter && <span class="text-[#FFCC00]"> · {Astro.url.searchParams.get('marca')}</span>}
+        </h1>
+        {
+          category.descriptionHtml && (
+            <div
+              class="max-w-3xl text-xs sm:text-sm text-zinc-400 line-clamp-3"
+              set:html={category.descriptionHtml}
+            />
+          )
+        }
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2 shrink-0">
+        {
+          brandFilter && (
+            <a
+              href={Astro.url.pathname}
+              class="rounded-xl border border-zinc-700 bg-zinc-950 px-3.5 py-2 text-xs font-bold text-zinc-300 hover:border-[#FFCC00]"
+            >
+              ✕ Quitar filtro ({Astro.url.searchParams.get('marca')})
+            </a>
+          )
+        }
+        <span class="rounded-xl border border-zinc-800 bg-zinc-950 px-3.5 py-2 text-xs font-bold text-zinc-300">
+          <strong class="text-[#FFCC00]">{filteredProducts.length}</strong> productos disponibles
+        </span>
+      </div>
+    </div>
+
+    <!-- Grid de Productos con View Transitions (transition:name) y CLS = 0 -->
+    {
+      filteredProducts.length === 0 ? (
+        <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 py-16 px-4 text-center space-y-4">
+          <p class="text-base font-bold text-zinc-300">
+            No encontramos productos con ese filtro específico en esta colección.
+          </p>
+          <a
+            href={Astro.url.pathname}
+            class="inline-flex rounded-xl bg-[#FFCC00] px-5 py-2.5 text-xs font-black uppercase text-black"
+          >
+            Ver toda la colección {category.name}
+          </a>
+        </div>
+      ) : (
+        <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 sm:gap-6">
+          {filteredProducts.map((product, idx) => {
+            const cover = product.images[0];
+            const isAboveFold = idx < 4;
+            const href = product.seo.canonicalUrl || `/products/${product.slug}`;
+            const formattedPrice = formatPrice(product.price, product.currency || 'CLP');
+            const formattedCompare = product.compareAtPrice
+              ? formatPrice(product.compareAtPrice, product.currency || 'CLP')
+              : null;
+
+            return (
+              <li class="group flex flex-col rounded-2xl border border-zinc-800 bg-zinc-900/80 overflow-hidden transition-all hover:border-[#FFCC00]/70 hover:shadow-xl">
+                <a href={href} class="flex flex-col flex-1">
+                  <div class="relative aspect-square w-full overflow-hidden bg-white p-3">
+                    {product.compareAtPrice && (
+                      <span class="absolute top-2.5 left-2.5 z-10 rounded bg-[#f04723] px-2 py-0.5 text-[10px] font-black uppercase text-white">
+                        OFERTA
+                      </span>
+                    )}
+                    {!product.availableForSale && (
+                      <span class="absolute top-2.5 right-2.5 z-10 rounded bg-zinc-900/90 px-2 py-0.5 text-[10px] font-bold uppercase text-zinc-300">
+                        Agotado
+                      </span>
+                    )}
+                    {cover && (
+                      <img
+                        src={cover.url}
+                        srcset={cover.srcset || undefined}
+                        sizes="(min-width: 1024px) 25vw, 50vw"
+                        alt={cover.alt || product.title}
+                        width={cover.width || 600}
+                        height={cover.height || 600}
+                        loading={isAboveFold ? 'eager' : 'lazy'}
+                        fetchpriority={idx === 0 ? 'high' : 'auto'}
+                        decoding={isAboveFold ? 'sync' : 'async'}
+                        transition:name={`product-image-${product.slug}`}
+                        class="h-full w-full object-contain object-center transition-transform duration-300 group-hover:scale-105"
+                      />
+                    )}
+                  </div>
+
+                  <div class="flex flex-1 flex-col justify-between p-4 space-y-3">
+                    <div class="space-y-1">
+                      {product.brand && (
+                        <span class="block text-[10px] font-black uppercase tracking-wider text-[#FFCC00]">
+                          {product.brand}
+                        </span>
+                      )}
+                      <h2 class="text-xs sm:text-sm font-bold text-white line-clamp-2 group-hover:text-[#FFCC00] transition-colors">
+                        {product.title}
+                      </h2>
+                    </div>
+
+                    <div class="pt-2 border-t border-zinc-800/80 flex items-baseline justify-between gap-2">
+                      <div>
+                        <span class="block text-base sm:text-lg font-black text-[#FFCC00]">
+                          {formattedPrice}
+                        </span>
+                        {formattedCompare && (
+                          <span class="text-xs text-zinc-500 line-through">{formattedCompare}</span>
+                        )}
+                      </div>
+                      <span class="rounded-lg bg-zinc-800 px-2.5 py-1 text-[10px] font-black uppercase text-white group-hover:bg-[#FFCC00] group-hover:text-black transition-colors">
+                        Ver →
+                      </span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      )
+    }
+  </section>
+</BaseLayout>

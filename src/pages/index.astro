@@ -1,0 +1,369 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import OffroadSearchHub from '../components/home/OffroadSearchHub';
+import { getEcommerceAdapter } from '../adapters';
+import {
+  BRANCHES_4X4,
+  PROJECT_BRANDS,
+  VEHICLE_DATABASE,
+} from '../data/offroad-catalog';
+import { formatPrice } from '../utils/formatters';
+
+export const prerender = false;
+
+const adapter = getEcommerceAdapter();
+const featuredProducts = adapter.getFeaturedProducts
+  ? await adapter.getFeaturedProducts(8)
+  : [];
+
+const seo = {
+  title: 'DOBLETRACCIÓN 4x4 · Suspensión, Neumáticos y Llantas Chile',
+  description:
+    'Especialistas 4x4 en Chile: suspensiones Fox y OME, neumáticos BFGoodrich, llantas Method. Sucursales en Santiago, La Serena y Concepción.',
+  canonicalUrl: '/',
+  robots: { index: true, follow: true },
+  ogType: 'website' as const,
+};
+
+const coreCategories = [
+  {
+    name: 'Suspensión',
+    subtitle: 'Altura y estabilidad',
+    cta: 'Ver suspensión',
+    href: '/collections/kit-de-levante-y-suspension',
+    badge: 'FOX · OME · BILSTEIN',
+  },
+  {
+    name: 'Neumáticos',
+    subtitle: 'Agarre y seguridad',
+    cta: 'Ver neumáticos',
+    href: '/collections/neumaticos',
+    badge: 'AT · MT · RT',
+  },
+  {
+    name: 'Llantas',
+    subtitle: 'Resistencia y look',
+    cta: 'Ver llantas',
+    href: '/collections/llantas',
+    badge: 'METHOD · FUEL · KMC',
+  },
+  {
+    name: 'Desempeño',
+    subtitle: 'Potencia y sonido',
+    cta: 'Ver desempeño',
+    href: '/collections/desempeno',
+    badge: 'ESCAPES · ADMISIÓN',
+  },
+  {
+    name: 'Exterior',
+    subtitle: 'Protección y estilo',
+    cta: 'Ver exterior',
+    href: '/collections/exterior',
+    badge: 'PARACHOQUES · PISADERAS',
+  },
+];
+---
+
+<BaseLayout seo={seo}>
+  <section class="relative overflow-hidden border-b border-zinc-800 bg-gradient-to-b from-zinc-900 via-zinc-950 to-zinc-950 py-8 sm:py-12">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <div class="space-y-3 max-w-3xl">
+          <div class="inline-flex items-center gap-2 rounded-full border border-[#FFCC00]/40 bg-[#FFCC00]/10 px-3.5 py-1 text-xs font-black uppercase tracking-wider text-[#FFCC00]">
+            <span>TALLER PROPIO E INSTALACIÓN CERTIFICADA · DESPACHO A TODO CHILE</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white leading-none">
+            EQUIPAMIENTO <span class="text-[#FFCC00]">4X4</span> PARA JEEPS Y CAMIONETAS
+          </h1>
+          <p class="text-sm sm:text-base text-zinc-400">
+            Suspensiones Fox y Old Man Emu, neumáticos BFGoodrich, Maxxis y Falken, llantas Method
+            y KMC. Selecciona tu vehículo o medida para ver solo lo 100% compatible.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3 shrink-0">
+          <a
+            href="/collections/kit-de-levante"
+            class="inline-flex items-center gap-2 rounded-xl border border-[#FFCC00] bg-[#FFCC00]/10 px-4 py-2.5 text-xs font-black uppercase tracking-wider text-[#FFCC00] hover:bg-[#FFCC00] hover:text-black transition-all"
+          >
+            ⚡ Arma tu TriplePack (Suspensión + Llantas + Neumáticos)
+          </a>
+        </div>
+      </div>
+
+      <OffroadSearchHub client:load />
+    </div>
+  </section>
+
+  <section aria-label="Beneficios Dobletracción" class="border-b border-zinc-800 bg-black py-5">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <li class="flex items-start gap-3 rounded-xl border border-zinc-900 bg-zinc-950/80 p-3.5">
+          <span class="text-[#FFCC00] font-black text-base">01</span>
+          <div>
+            <p class="text-xs font-black uppercase text-white">Garantía oficial</p>
+            <p class="text-[11px] text-zinc-400">Productos originales con respaldo de marca</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3 rounded-xl border border-zinc-900 bg-zinc-950/80 p-3.5">
+          <span class="text-[#FFCC00] font-black text-base">02</span>
+          <div>
+            <p class="text-xs font-black uppercase text-white">Instalación en sucursal</p>
+            <p class="text-[11px] text-zinc-400">Equipo técnico especializado 4x4</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3 rounded-xl border border-zinc-900 bg-zinc-950/80 p-3.5">
+          <span class="text-[#FFCC00] font-black text-base">03</span>
+          <div>
+            <p class="text-xs font-black uppercase text-white">Despacho a todo Chile</p>
+            <p class="text-[11px] text-zinc-400">Envío seguro · seguimiento online</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3 rounded-xl border border-zinc-900 bg-zinc-950/80 p-3.5">
+          <span class="text-[#FFCC00] font-black text-base">04</span>
+          <div>
+            <p class="text-xs font-black uppercase text-white">Hasta 12 cuotas</p>
+            <p class="text-[11px] text-zinc-400">Webpay · MercadoPago · transferencia</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3 rounded-xl border border-zinc-900 bg-zinc-950/80 p-3.5">
+          <span class="text-[#FFCC00] font-black text-base">05</span>
+          <div>
+            <p class="text-xs font-black uppercase text-white">3 sucursales</p>
+            <p class="text-[11px] text-zinc-400">Las Condes · Concepción · La Serena</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+      <div>
+        <span class="text-xs font-black uppercase tracking-widest text-[#FFCC00]">
+          PARA UNA EXPERIENCIA PERSONALIZADA
+        </span>
+        <h2 class="mt-1 text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+          Elige tu Camioneta o 4x4
+        </h2>
+      </div>
+      <a
+        href="/pages/garage-interactivo"
+        class="text-xs font-black uppercase tracking-wider text-[#FFCC00] hover:underline"
+      >
+        Ver todos los modelos →
+      </a>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+      {
+        VEHICLE_DATABASE.slice(0, 12).map((veh) => (
+          <a
+            href={`/collections/${veh.collectionSlug}`}
+            class="group relative flex flex-col justify-between rounded-2xl border border-zinc-800 bg-zinc-900/70 p-4 transition-all hover:border-[#FFCC00] hover:bg-zinc-900"
+          >
+            <div class="flex items-center justify-between gap-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+                {veh.brand}
+              </span>
+              <span class="rounded bg-zinc-800 px-1.5 py-0.5 text-[10px] font-mono font-bold text-[#FFCC00]">
+                {veh.boltPattern}
+              </span>
+            </div>
+            <div class="my-3">
+              <h3 class="text-base font-black uppercase text-white group-hover:text-[#FFCC00] transition-colors">
+                {veh.model}
+              </h3>
+              <p class="text-[11px] text-zinc-400 truncate">{veh.generation}</p>
+            </div>
+            <div class="flex items-center justify-between border-t border-zinc-800/80 pt-2 text-[11px] font-bold text-zinc-300">
+              <span>OEM {veh.oemTire}</span>
+              <span class="text-[#FFCC00]">→</span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-6">
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      {
+        coreCategories.map((cat) => (
+          <a
+            href={cat.href}
+            class="group flex flex-col justify-between rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-900 to-zinc-950 p-6 transition-all hover:border-[#FFCC00]"
+          >
+            <div class="space-y-2">
+              <span class="inline-block rounded bg-[#FFCC00]/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-[#FFCC00]">
+                {cat.badge}
+              </span>
+              <h3 class="text-xl font-black uppercase text-white group-hover:text-[#FFCC00]">
+                {cat.name}
+              </h3>
+              <p class="text-xs text-zinc-400">{cat.subtitle}</p>
+            </div>
+            <span class="mt-6 inline-flex items-center gap-1 text-xs font-black uppercase text-[#FFCC00]">
+              {cat.cta} →
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  {
+    featuredProducts.length > 0 && (
+      <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+          <div>
+            <span class="text-xs font-black uppercase tracking-widest text-[#FFCC00]">
+              CATÁLOGO EN TIEMPO REAL · STOREFRONT GRAPHQL
+            </span>
+            <h2 class="mt-1 text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+              Equipamiento Destacado en Stock
+            </h2>
+          </div>
+          <a
+            href="/collections/all"
+            class="text-xs font-black uppercase tracking-wider text-[#FFCC00] hover:underline"
+          >
+            Ver catálogo completo →
+          </a>
+        </div>
+
+        <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 sm:gap-6">
+          {featuredProducts.map((product, idx) => {
+            const cover = product.images[0];
+            const href = product.seo.canonicalUrl || `/products/${product.slug}`;
+            const priceFormatted = formatPrice(product.price, product.currency || 'CLP');
+
+            return (
+              <li class="group flex flex-col rounded-2xl border border-zinc-800 bg-zinc-900/80 overflow-hidden transition-all hover:border-[#FFCC00]">
+                <a href={href} class="flex flex-col flex-1">
+                  <div class="relative aspect-square w-full overflow-hidden bg-white p-3">
+                    {cover && (
+                      <img
+                        src={cover.url}
+                        srcset={cover.srcset || undefined}
+                        sizes="(min-width: 1024px) 25vw, 50vw"
+                        alt={cover.alt || product.title}
+                        width={cover.width || 600}
+                        height={cover.height || 600}
+                        loading={idx < 4 ? 'eager' : 'lazy'}
+                        decoding="async"
+                        transition:name={`product-image-${product.slug}`}
+                        class="h-full w-full object-contain object-center transition-transform duration-300 group-hover:scale-105"
+                      />
+                    )}
+                  </div>
+                  <div class="flex flex-1 flex-col justify-between p-4 space-y-3">
+                    <div>
+                      {product.brand && (
+                        <span class="block text-[10px] font-black uppercase tracking-wider text-[#FFCC00]">
+                          {product.brand}
+                        </span>
+                      )}
+                      <h3 class="mt-0.5 text-xs sm:text-sm font-bold text-white line-clamp-2 group-hover:text-[#FFCC00]">
+                        {product.title}
+                      </h3>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-zinc-800 pt-2.5">
+                      <span class="text-base sm:text-lg font-black text-[#FFCC00]">
+                        {priceFormatted}
+                      </span>
+                      <span class="rounded bg-zinc-800 px-2 py-1 text-[10px] font-black uppercase text-white group-hover:bg-[#FFCC00] group-hover:text-black">
+                        Comprar
+                      </span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    )
+  }
+
+  <section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <div class="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 sm:p-8 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <span class="text-xs font-black uppercase tracking-widest text-[#FFCC00]">
+            BUILDS REALES EN NUESTROS TALLERES
+          </span>
+          <h2 class="mt-1 text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+            Proyectos DOBLETRACCIÓN
+          </h2>
+          <p class="text-xs sm:text-sm text-zinc-400">
+            Revisa el catálogo de proyectos más grande de Chile y elige tu configuración por marca:
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2.5">
+        {
+          PROJECT_BRANDS.map((brand) => (
+            <a
+              href={`/collections/${brand.slug}`}
+              class="rounded-xl border border-zinc-800 bg-zinc-950 py-3 px-4 text-center text-xs font-black uppercase tracking-wider text-zinc-200 hover:border-[#FFCC00] hover:bg-[#FFCC00] hover:text-black transition-all"
+            >
+              {brand.name}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="sucursales" class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 space-y-6">
+    <div>
+      <span class="text-xs font-black uppercase tracking-widest text-[#FFCC00]">VISÍTANOS</span>
+      <h2 class="mt-1 text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+        Nuestras Sucursales y Talleres
+      </h2>
+      <p class="text-xs sm:text-sm text-zinc-400">
+        Tres sucursales propias en Chile — Las Condes (Casa Matriz), La Serena y Concepción.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+      {
+        BRANCHES_4X4.map((branch) => (
+          <div class="rounded-2xl border border-zinc-800 bg-zinc-900/80 p-6 flex flex-col justify-between space-y-5">
+            <div class="space-y-2">
+              <span class="inline-block rounded bg-[#FFCC00]/15 px-2.5 py-0.5 text-[11px] font-black uppercase text-[#FFCC00]">
+                {branch.city}
+              </span>
+              <h3 class="text-xl font-black uppercase text-white">{branch.name}</h3>
+              <ul class="space-y-1.5 text-xs text-zinc-300 pt-1">
+                <li>📍 {branch.address}</li>
+                <li>📞 {branch.phone}</li>
+                <li>🕒 {branch.hours}</li>
+              </ul>
+            </div>
+
+            <div class="flex gap-2.5 pt-2">
+              <a
+                href={branch.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex-1 rounded-xl bg-[#FFCC00] py-2.5 px-4 text-center text-xs font-black uppercase text-black hover:bg-[#ffd633]"
+              >
+                WhatsApp Sucursal
+              </a>
+              <a
+                href={branch.phoneHref}
+                class="rounded-xl border border-zinc-700 bg-zinc-950 py-2.5 px-4 text-center text-xs font-bold text-white hover:border-[#FFCC00]"
+              >
+                Llamar
+              </a>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+

@@ -1,0 +1,134 @@
+---
+import type { UnifiedProduct } from '../../adapters/types';
+import { formatPrice } from '../../utils/formatters';
+
+interface Props {
+  product: UnifiedProduct;
+  showExtendedSpecs?: boolean;
+}
+
+const { product, showExtendedSpecs = true } = Astro.props;
+
+const formattedPrice = formatPrice(product.price, product.currency || 'CLP');
+const formattedComparePrice = product.compareAtPrice
+  ? formatPrice(product.compareAtPrice, product.currency || 'CLP')
+  : null;
+const installmentPrice = formatPrice(Math.round(product.price / 12), product.currency || 'CLP');
+---
+
+<div class="space-y-6">
+  <!-- Cabecera de Producto: Marca, SKU y Calificación -->
+  <div class="space-y-2">
+    <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-bold uppercase tracking-wider text-zinc-400">
+      {
+        product.brand && (
+          <span class="rounded bg-[#FFCC00]/15 px-2.5 py-0.5 text-[#FFCC00] font-black">
+            {product.brand}
+          </span>
+        )
+      }
+      <span>
+        SKU: <strong data-product-sku class="font-mono text-zinc-200">{product.sku}</strong>
+      </span>
+    </div>
+
+    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-white">
+      {product.title}
+    </h1>
+
+    {
+      product.rating && product.rating.reviewCount > 0 && (
+        <div class="flex items-center gap-2 pt-1 text-sm text-zinc-400">
+          <div class="flex items-center text-[#FFCC00]" aria-hidden="true">
+            {'★'.repeat(Math.round(product.rating.ratingValue))}
+            {'☆'.repeat(Math.max(0, 5 - Math.round(product.rating.ratingValue)))}
+          </div>
+          <span class="font-bold text-white">{product.rating.ratingValue.toFixed(1)}</span>
+          <span>({product.rating.reviewCount} reseñas verificadas)</span>
+        </div>
+      )
+    }
+  </div>
+
+  <!-- Bloque de Precio CLP + Cuotas con altura reservada (CLS = 0) -->
+  <div class="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-4 space-y-2">
+    <div class="flex flex-wrap items-baseline gap-3 min-h-[2.5rem]">
+      <span
+        data-product-price
+        class="text-3xl sm:text-4xl font-black tracking-tight text-[#FFCC00]"
+      >
+        {formattedPrice}
+      </span>
+      {
+        formattedComparePrice && (
+          <span
+            data-product-compare-price
+            class="text-lg font-bold text-zinc-500 line-through"
+          >
+            {formattedComparePrice}
+          </span>
+        )
+      }
+      <span
+        class:list={[
+          'ml-auto inline-flex items-center rounded-lg px-2.5 py-1 text-xs font-black uppercase',
+          product.availableForSale
+            ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
+            : 'bg-zinc-800 text-zinc-400',
+        ]}
+      >
+        {product.availableForSale ? '✓ Disponible · Despacho / Taller' : 'Sin Stock'}
+      </span>
+    </div>
+    <p class="text-xs text-zinc-400">
+      Hasta <strong class="text-white">12 cuotas de {installmentPrice}</strong> con Webpay /
+      MercadoPago · Instalación disponible en <strong class="text-zinc-200">Las Condes, Concepción y La Serena</strong>.
+    </p>
+  </div>
+
+  {
+    product.shortDescription && (
+      <p class="text-sm sm:text-base leading-relaxed text-zinc-300">
+        {product.shortDescription}
+      </p>
+    )
+  }
+
+  <!-- Slot para Islas Interactivas (VariantPicker + AddToCart) -->
+  <slot name="interactive-actions" />
+
+  <!-- Descripción rica y tabla de especificaciones técnicas -->
+  <div class="pt-6 border-t border-zinc-800 space-y-8 [content-visibility:auto] [contain-intrinsic-size:1px_400px]">
+    {
+      product.descriptionHtml && (
+        <section aria-labelledby="desc-heading" class="space-y-3">
+          <h2 id="desc-heading" class="text-lg font-black uppercase tracking-wide text-white">
+            Ficha Técnica y Detalles
+          </h2>
+          <div
+            class="prose prose-invert max-w-none text-sm sm:text-base text-zinc-300 leading-relaxed space-y-3"
+            set:html={product.descriptionHtml}
+          />
+        </section>
+      )
+    }
+
+    {
+      showExtendedSpecs && product.specifications.length > 0 && (
+        <section aria-labelledby="specs-heading" class="space-y-3">
+          <h2 id="specs-heading" class="text-lg font-black uppercase tracking-wide text-white">
+            Especificaciones 4x4
+          </h2>
+          <dl class="divide-y divide-zinc-800 rounded-xl border border-zinc-800 bg-zinc-900/50">
+            {product.specifications.map((spec) => (
+              <div class="grid grid-cols-3 gap-4 px-4 py-3 text-sm">
+                <dt class="font-semibold text-zinc-400">{spec.name}</dt>
+                <dd class="col-span-2 font-bold text-white">{spec.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )
+    }
+  </div>
+</div>

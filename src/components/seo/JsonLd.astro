@@ -1,0 +1,159 @@
+---
+import type { BreadcrumbItem, Category, UnifiedProduct } from '../../adapters/types';
+import { buildValidatedCanonicalUrl } from '../../config/routing.config';
+
+interface Props {
+  siteOrigin: string;
+  product?: UnifiedProduct;
+  category?: Category;
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const { siteOrigin, product, category, breadcrumbs = [] } = Astro.props;
+
+const activeBreadcrumbs =
+  product?.breadcrumbs || category?.breadcrumbs || breadcrumbs;
+
+const schemaGraph: Record<string, unknown>[] = [];
+
+// 1. Marcado estructurado BreadcrumbList (Válido para Google Rich Results)
+if (activeBreadcrumbs.length > 0) {
+  schemaGraph.push({
+    '@type': 'BreadcrumbList',
+    '@id': `${buildValidatedCanonicalUrl(siteOrigin, Astro.url.pathname)}#breadcrumb`,
+    itemListElement: activeBreadcrumbs.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.name,
+      item: buildValidatedCanonicalUrl(siteOrigin, crumb.path),
+    })),
+  });
+}
+
+// 2. Marcado estructurado Product + Offer + AggregateRating
+if (product) {
+  const canonicalUrl = buildValidatedCanonicalUrl(
+    siteOrigin,
+    product.seo.canonicalUrl || Astro.url.pathname
+  );
+
+  const mapSchemaAvailability = (status: UnifiedProduct['stockStatus']): string => {
+    switch (status) {
+      case 'IN_STOCK':
+        return 'https://schema.org/InStock';
+      case 'PREORDER':
+        return 'https://schema.org/PreOrder';
+      case 'BACKORDER':
+        return 'https://schema.org/BackOrder';
+      default:
+        return 'https://schema.org/OutOfStock';
+    }
+  };
+
+  // Si existen múltiples variantes con distintos precios, o múltiples SKUs, exponemos Offer / AggregateOffer
+  const offers =
+    product.variants.length > 1
+      ? product.variants.map((variant) => ({
+          '@type': 'Offer',
+          sku: variant.sku,
+          name: variant.title,
+          price: variant.price.toFixed(2),
+          priceCurrency: variant.currency,
+          availability: mapSchemaAvailability(variant.stockStatus),
+          itemCondition: 'https://schema.org/NewCondition',
+          url: canonicalUrl,
+        }))
+      : {
+          '@type': 'Offer',
+          sku: product.sku,
+          price: product.price.toFixed(2),
+          priceCurrency: product.currency,
+          availability: mapSchemaAvailability(product.stockStatus),
+          itemCondition: 'https://schema.org/NewCondition',
+          url: canonicalUrl,
+        };
+
+  const productSchema: Record<string, unknown> = {
+    '@type': 'Product',
+    '@id': `${canonicalUrl}#product`,
+    name: product.title,
+    description: product.seo.description || product.shortDescription,
+    sku: product.sku,
+    image: product.images.map((img) =>
+      img.url.startsWith('http') ? img.url : buildValidatedCanonicalUrl(siteOrigin, img.url)
+    ),
+    offers,
+  };
+
+  if (product.brand) {
+    productSchema.brand = {
+      '@type': 'Brand',
+      name: product.brand,
+    };
+  }
+
+  if (product.gtin) {
+    productSchema.gtin13 = product.gtin;
+  }
+
+  if (product.mpn) {
+    productSchema.mpn = product.mpn;
+  }
+
+  if (product.rating && product.rating.reviewCount > 0) {
+    productSchema.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: product.rating.ratingValue.toFixed(1),
+      reviewCount: product.rating.reviewCount,
+      bestRating: product.rating.bestRating ?? 5,
+      worstRating: product.rating.worstRating ?? 1,
+    };
+  }
+
+  schemaGraph.push(productSchema);
+}
+
+// 3. Marcado estructurado CollectionPage / ItemList para Categorías
+if (category) {
+  const canonicalUrl = buildValidatedCanonicalUrl(
+    siteOrigin,
+    category.seo.canonicalUrl || Astro.url.pathname
+  );
+
+  schemaGraph.push({
+    '@type': 'CollectionPage',
+    '@id': `${canonicalUrl}#collection`,
+    name: category.name,
+    description: category.seo.description,
+    url: canonicalUrl,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: category.products.length,
+      itemListElement: category.products.map((prod, idx) => ({
+        '@type': 'ListItem',
+        position: idx + 1,
+        url: buildValidatedCanonicalUrl(
+          siteOrigin,
+          prod.seo.canonicalUrl || `/${prod.slug}`
+        ),
+        name: prod.title,
+      })),
+    },
+  });
+}
+
+const jsonLdPayload = {
+  '@context': 'https://schema.org',
+  '@graph': schemaGraph,
+};
+---
+
+{
+  schemaGraph.length > 0 && (
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(jsonLdPayload)}
+    />
+  )
+}
