@@ -41,7 +41,7 @@ export default function TireCalculatorWidget({
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 pb-4">
         <div>
           <span className="inline-flex items-center gap-1.5 rounded bg-[#FFCC00]/15 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-[#FFCC00]">
-            Laboratorio Técnico 4x4.cl
+            Laboratorio Técnico DOBLETRACCIÓN
           </span>
           <h3 className="mt-1 text-lg sm:text-xl font-black uppercase tracking-tight text-white">
             Calculadora Visual de Neumáticos y Ganancia de Altura

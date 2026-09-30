@@ -14,6 +14,288 @@ interface Props {
 }
 
 const { seo, product, category, lcpImage } = Astro.props;
+
+// Datos del Mega-Menú interactivo "VEHICULOS 4X4" (4 columnas idénticas a DOBLETRACCION, 100% conectado a Shopify dobletraccion.com)
+const megaMenuBrands = [
+  {
+    id: "ford",
+    name: "FORD",
+    slug: "ford",
+    badgeText: "FORD",
+    badgeColor: "#003478",
+    heroImg:
+      "https://cdn.shopify.com/s/files/1/0802/3703/5825/files/DSC3921.jpg?v=1767194927&width=720&format=webp&quality=80",
+    models: [
+      {
+        name: "BRONCO SPORT",
+        slug: "ford",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/files/DSC3921.jpg?v=1767194927&width=360&format=webp&quality=75",
+        generations: ["2021 - Actualidad (CX430)", "Big Bend / Badlands / Wildtrak"],
+      },
+      {
+        name: "F-150",
+        slug: "f-150",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/F150_LARIAT_GRIS_1.jpg?v=1755194865&width=360&format=webp&quality=75",
+        generations: ["2021 - Actualidad (14ª Gen)", "2015 - 2020 (13ª Gen)", "2009 - 2014 (12ª Gen)"],
+      },
+      {
+        name: "F-150 RAPTOR",
+        slug: "f-150-raptor",
+        top: true,
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/1_609edc30-d7a0-41f3-8714-4abccd60d55d.png?v=1735605603&width=360&format=webp&quality=75",
+        generations: ["2021 - Actualidad (Gen 3)", "2017 - 2020 (Gen 2)", "2010 - 2014 (Gen 1 SVT)"],
+      },
+      {
+        name: "RANGER",
+        slug: "ranger",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/RANGER_LMTD_V6_GRIS_OSCURO_1_d3b044b4-1327-414c-ba1c-1c79d25ba187.jpg?v=1755187951&width=360&format=webp&quality=75",
+        generations: ["2023 - Actualidad (Next-Gen P703)", "2012 - 2022 (T6 / T7)"],
+      },
+      {
+        name: "MAVERICK",
+        slug: "ford",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/files/MAVERICK_VERDE_2.jpg?v=1761832709&width=360&format=webp&quality=75",
+        generations: ["2022 - Actualidad (FX4 / Lariat / Tremor)"],
+      },
+      {
+        name: "BRONCO",
+        slug: "ford",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/files/DSC3921.jpg?v=1767194927&width=360&format=webp&quality=75",
+        generations: ["2021 - Actualidad (6ª Gen 2P / 4P)"],
+      },
+      {
+        name: "EXPEDITION",
+        slug: "ford",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/files/OSCAR_EXPEDITION_ROJA_JULIO_24_1.jpg?v=1743792987&width=360&format=webp&quality=75",
+        generations: ["2018 - Actualidad (4ª Gen)"],
+      },
+      {
+        name: "RANGER RAPTOR",
+        slug: "ranger",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/files/DSC4084.jpg?v=1769443091&width=360&format=webp&quality=75",
+        generations: ["2023 - Actualidad (3.0 V6 Twin-Turbo)", "2019 - 2022 (2.0 Bi-Turbo)"],
+      },
+    ],
+  },
+  {
+    id: "toyota",
+    name: "TOYOTA",
+    slug: "toyota",
+    badgeText: "TOYOTA",
+    badgeColor: "#EB0A1E",
+    heroImg:
+      "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/TOYOTA_HILUX_GR_BLANCA_KO3_1.jpg?v=1755188653&width=720&format=webp&quality=80",
+    models: [
+      {
+        name: "HILUX",
+        slug: "hilux",
+        top: true,
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/TOYOTA_HILUX_GR_BLANCA_KO3_1.jpg?v=1755188653&width=360&format=webp&quality=75",
+        generations: ["2016 - Actualidad (Revo / GR-S)", "2005 - 2015 (Vigo)"],
+      },
+      {
+        name: "4RUNNER",
+        slug: "4runner",
+        top: true,
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/4runnerblanca1_76b1f103-0209-4149-bd5b-d908c548789a.jpg?v=1755188208&width=360&format=webp&quality=75",
+        generations: ["2010 - 2024 (5ª Gen N280)", "2025 - Actualidad (6ª Gen)"],
+      },
+      {
+        name: "TUNDRA",
+        slug: "tundra",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/TUNDRARORRO1.jpg?v=1755202848&width=360&format=webp&quality=75",
+        generations: ["2022 - Actualidad (3ª Gen V6 i-FORCE)", "2014 - 2021 (2.5 Gen V8 5.7)"],
+      },
+      {
+        name: "LAND CRUISER",
+        slug: "toyota",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/files/LAND_CRUISER_1.jpg?v=1751034420&width=360&format=webp&quality=75",
+        generations: ["Serie 300 / Serie 200", "Serie 70 / Prado 250"],
+      },
+      {
+        name: "PRADO",
+        slug: "toyota",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/files/DSC5902.jpg?v=1773069072&width=360&format=webp&quality=75",
+        generations: ["2010 - 2023 (J150)", "2024 - Actualidad (J250)"],
+      },
+    ],
+  },
+  {
+    id: "jeep",
+    name: "JEEP",
+    slug: "jeep",
+    badgeText: "JEEP",
+    badgeColor: "#3A5A40",
+    heroImg:
+      "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/parachoque_jt.webp?v=1756156386&width=720&format=webp&quality=80",
+    models: [
+      {
+        name: "WRANGLER JL",
+        slug: "wrangler-jl",
+        top: true,
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/parachoque_jt.webp?v=1756156386&width=360&format=webp&quality=75",
+        generations: ["2018 - Actualidad (JL 2P / JLU 4P Rubicon & Sahara)"],
+      },
+      {
+        name: "WRANGLER JK",
+        slug: "wrangler-jk",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/parachoque_jt.webp?v=1756156386&width=360&format=webp&quality=75",
+        generations: ["2007 - 2018 (JK 2P / JKU 4P)"],
+      },
+      {
+        name: "GLADIATOR JT",
+        slug: "gladiator",
+        top: true,
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/parachoque_jt.webp?v=1756156386&width=360&format=webp&quality=75",
+        generations: ["2020 - Actualidad (JT Overland / Rubicon / Mojave)"],
+      },
+      {
+        name: "WRANGLER",
+        slug: "wrangler",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/parachoque_jt.webp?v=1756156386&width=360&format=webp&quality=75",
+        generations: ["Todas las generaciones Wrangler"],
+      },
+    ],
+  },
+  {
+    id: "chevrolet",
+    name: "CHEVROLET",
+    slug: "chevrolet",
+    badgeText: "CHEVY",
+    badgeColor: "#D4AF37",
+    heroImg:
+      "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/Chevy_Silverado-1.jpg?v=1691282295&width=720&format=webp&quality=80",
+    models: [
+      {
+        name: "SILVERADO 1500",
+        slug: "silverado",
+        top: true,
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/Chevy_Silverado-1.jpg?v=1691282295&width=360&format=webp&quality=75",
+        generations: ["2019 - Actualidad (T1XX Trail Boss / ZR2 / LTZ)", "2014 - 2018 (K2XX)"],
+      },
+      {
+        name: "COLORADO",
+        slug: "chevrolet-colorado",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/Chevy_Silverado-1.jpg?v=1691282295&width=360&format=webp&quality=75",
+        generations: ["2016 - Actualidad (Z71 / High Country)"],
+      },
+      {
+        name: "D-MAX",
+        slug: "dmax",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/Chevy_Silverado-1.jpg?v=1691282295&width=360&format=webp&quality=75",
+        generations: ["2015 - Actualidad (4x4 Diesel)"],
+      },
+    ],
+  },
+  {
+    id: "ram",
+    name: "RAM",
+    slug: "ram-1500",
+    badgeText: "RAM",
+    badgeColor: "#8B0000",
+    heroImg:
+      "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/RAM_1500_LMTD_GRIS_1.jpg?v=1755188446&width=720&format=webp&quality=80",
+    models: [
+      {
+        name: "RAM 1500",
+        slug: "ram-1500",
+        top: true,
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/RAM_1500_LMTD_GRIS_1.jpg?v=1755188446&width=360&format=webp&quality=75",
+        generations: ["2019 - Actualidad (DT Rebel / Limited / Laramie)", "2010 - 2023 (DS Classic)"],
+      },
+      {
+        name: "RAM 2500",
+        slug: "ram-2500",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/RAM_1500_LMTD_GRIS_1.jpg?v=1755188446&width=360&format=webp&quality=75",
+        generations: ["2019 - Actualidad (Heavy Duty Cummins 6.7)"],
+      },
+    ],
+  },
+  {
+    id: "mitsubishi",
+    name: "MITSUBISHI",
+    slug: "mitsubishi",
+    badgeText: "MITSU",
+    badgeColor: "#E60012",
+    heroImg:
+      "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/Blog_DOBLETRACCION_5_52317c68-8d3c-4a9a-a4f7-f11ab954854f.jpg?v=1756241211&width=720&format=webp&quality=80",
+    models: [
+      {
+        name: "L200",
+        slug: "l200",
+        top: true,
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/Blog_DOBLETRACCION_5_52317c68-8d3c-4a9a-a4f7-f11ab954854f.jpg?v=1756241211&width=360&format=webp&quality=75",
+        generations: ["2016 - 2024 (Katana / Dakar KL)", "2025 - Actualidad (Nueva Gen)"],
+      },
+      {
+        name: "MONTERO",
+        slug: "montero",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/Blog_DOBLETRACCION_5_52317c68-8d3c-4a9a-a4f7-f11ab954854f.jpg?v=1756241211&width=360&format=webp&quality=75",
+        generations: ["Montero Sport / Montero Dakar"],
+      },
+    ],
+  },
+  {
+    id: "nissan",
+    name: "NISSAN",
+    slug: "nissan",
+    badgeText: "NISSAN",
+    badgeColor: "#C3002F",
+    heroImg:
+      "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/Blog_DOBLETRACCION_4_d2f57e00-150b-47ba-81c5-9dd20f05c1ea.jpg?v=1756240709&width=720&format=webp&quality=80",
+    models: [
+      {
+        name: "NP300 / NAVARA",
+        slug: "np300",
+        top: true,
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/Blog_DOBLETRACCION_4_d2f57e00-150b-47ba-81c5-9dd20f05c1ea.jpg?v=1756240709&width=360&format=webp&quality=75",
+        generations: ["2016 - Actualidad (D23 LE / XE / PRO-4X)"],
+      },
+      {
+        name: "NAVARA",
+        slug: "navara",
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/Blog_DOBLETRACCION_4_d2f57e00-150b-47ba-81c5-9dd20f05c1ea.jpg?v=1756240709&width=360&format=webp&quality=75",
+        generations: ["2008 - 2015 (D40)", "2016 - Actualidad (D23)"],
+      },
+    ],
+  },
+  {
+    id: "mazda",
+    name: "MAZDA",
+    slug: "mazda",
+    badgeText: "MAZDA",
+    badgeColor: "#101010",
+    heroImg:
+      "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/Blog_DOBLETRACCION_6_07586162-05fa-4327-8265-c70fa61db617.jpg?v=1756241473&width=720&format=webp&quality=80",
+    models: [
+      {
+        name: "BT-50",
+        slug: "bt-50",
+        top: true,
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/Blog_DOBLETRACCION_6_07586162-05fa-4327-8265-c70fa61db617.jpg?v=1756241473&width=360&format=webp&quality=75",
+        generations: ["2021 - Actualidad (3ª Gen TF)", "2012 - 2020 (2ª Gen UP/UR)"],
+      },
+    ],
+  },
+  {
+    id: "volkswagen",
+    name: "VOLKSWAGEN",
+    slug: "volkswagen",
+    badgeText: "VW",
+    badgeColor: "#001E50",
+    heroImg:
+      "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/WhatsAppImage2025-06-19at9.59.58AM.jpg?v=1756233500&width=720&format=webp&quality=80",
+    models: [
+      {
+        name: "AMAROK",
+        slug: "amarok",
+        top: true,
+        img: "https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/WhatsAppImage2025-06-19at9.59.58AM.jpg?v=1756233500&width=360&format=webp&quality=75",
+        generations: ["2017 - Actualidad (V6 3.0 TDI)", "2011 - 2022 (2.0 BiTDI)"],
+      },
+    ],
+  },
+];
 ---
 
 <!doctype html>
@@ -36,264 +318,510 @@ const { seo, product, category, lcpImage } = Astro.props;
       <div class="min-h-screen flex flex-col">
         <a href="#main-content" class="skip-link">Saltar al contenido</a>
 
-        <!-- HEADER 4X4.CL EXACTO CONECTADO A SHOPIFY DOBLETRACCION.COM -->
+        <!-- HEADER 4X4.CL EXACTO (INCLUIDO MEGA-MENÚ DE 4 COLUMNAS CON DATOS DE SHOPIFY) -->
         <header class="sticky top-0 z-50 bg-foreground/95 backdrop-blur-sm text-background pt-[env(safe-area-inset-top)] will-change-transform">
-          <!-- Marquee superior -->
+          <!-- 1. Topbar Marquee -->
           <div class="bg-foreground text-background/75 overflow-hidden border-b border-background/10">
             <div class="lg:hidden py-1.5 text-center">
               <span class="inline-flex items-center gap-2 t-caption">
-                <span class="text-primary">⚡</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-3 w-3 fill-primary text-primary"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
                 COMPRA EN 3 CUOTAS SIN INTERÉS POR MERCADOPAGO
               </span>
             </div>
             <div class="hidden lg:block relative py-1.5">
               <div class="flex whitespace-nowrap topbar-marquee will-change-transform">
-                <span class="inline-flex items-center gap-2 px-8 t-caption"><span class="text-primary">⚡</span> COMPRA EN 3 CUOTAS SIN INTERÉS POR MERCADOPAGO</span>
-                <span class="inline-flex items-center gap-2 px-8 t-caption">🚚 Envíos a todo Chile · Garantía de instalación</span>
-                <span class="inline-flex items-center gap-2 px-8 t-caption">🏆 +1.200 proyectos terminados · La marca #1 en 4x4</span>
-                <span class="inline-flex items-center gap-2 px-8 t-caption">📍 Sucursales en Santiago · La Serena · Concepción</span>
-                <span class="inline-flex items-center gap-2 px-8 t-caption">⚡ Fox · BFGoodrich · Method · OME · Rancho · Warn</span>
-                <span class="inline-flex items-center gap-2 px-8 t-caption"><span class="text-primary">⚡</span> COMPRA EN 3 CUOTAS SIN INTERÉS POR MERCADOPAGO</span>
-                <span class="inline-flex items-center gap-2 px-8 t-caption">🚚 Envíos a todo Chile · Garantía de instalación</span>
-                <span class="inline-flex items-center gap-2 px-8 t-caption">🏆 +1.200 proyectos terminados · La marca #1 en 4x4</span>
-                <span class="inline-flex items-center gap-2 px-8 t-caption">📍 Sucursales en Santiago · La Serena · Concepción</span>
-                <span class="inline-flex items-center gap-2 px-8 t-caption">⚡ Fox · BFGoodrich · Method · OME · Rancho · Warn</span>
+                <span class="inline-flex items-center gap-2 px-8 t-caption"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-3 w-3 fill-primary text-primary"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>COMPRA EN 3 CUOTAS SIN INTERÉS POR MERCADOPAGO</span>
+                <span class="inline-flex items-center gap-2 px-8 t-caption"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-3 w-3 fill-primary text-primary"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>🚚 Envíos a todo Chile · Garantía de instalación</span>
+                <span class="inline-flex items-center gap-2 px-8 t-caption"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-3 w-3 fill-primary text-primary"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>🏆 +1.200 proyectos terminados · La marca #1 en 4x4</span>
+                <span class="inline-flex items-center gap-2 px-8 t-caption"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-3 w-3 fill-primary text-primary"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>📍 Sucursales en Santiago · La Serena · Concepción</span>
+                <span class="inline-flex items-center gap-2 px-8 t-caption"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-3 w-3 fill-primary text-primary"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>⚡ Fox · BFGoodrich · Method · OME · Rancho · Warn</span>
+                <span class="inline-flex items-center gap-2 px-8 t-caption"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-3 w-3 fill-primary text-primary"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>COMPRA EN 3 CUOTAS SIN INTERÉS POR MERCADOPAGO</span>
+                <span class="inline-flex items-center gap-2 px-8 t-caption"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap h-3 w-3 fill-primary text-primary"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>🚚 Envíos a todo Chile · Garantía de instalación</span>
               </div>
             </div>
           </div>
 
-          <!-- Sub-barra superior Desktop -->
+          <!-- 2. Sub-Topbar -->
           <div class="hidden lg:block border-b border-brand-charcoal/60">
             <div class="container-dt flex items-center justify-between py-1.5 t-topbar text-background/60">
               <div class="flex items-center gap-6">
                 <span class="flex items-center gap-1.5">
-                  <span class="text-primary">✓</span> Envíos a Todo Chile
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check h-3.5 w-3.5 text-primary"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                  Envíos a Todo Chile
                 </span>
                 <span class="flex items-center gap-1.5">
-                  <span class="text-primary">✓</span> Santiago, La Serena y Concepción
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check h-3.5 w-3.5 text-primary"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                  Santiago, La Serena y Concepción
                 </span>
               </div>
               <nav class="flex items-center gap-5">
-                <a class="hover:text-primary transition" href="/#sucursales">Sucursales</a>
+                <div class="relative group">
+                  <a class="hover:text-primary transition inline-flex items-center gap-1" href="/#sucursales">
+                    Sucursales
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-3 w-3"><path d="m6 9 6 6 6-6"/></svg>
+                  </a>
+                  <div class="absolute right-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition z-50">
+                    <div class="bg-background text-foreground border border-border shadow-card-hover min-w-[240px] py-1">
+                      <a class="block px-4 py-2.5 t-small hover:bg-primary hover:text-primary-foreground" href="/#sucursales">Las Condes · Casa Matriz</a>
+                      <a class="block px-4 py-2.5 t-small hover:bg-primary hover:text-primary-foreground" href="/#sucursales">Concepción</a>
+                      <a class="block px-4 py-2.5 t-small hover:bg-primary hover:text-primary-foreground" href="/#sucursales">La Serena</a>
+                      <a class="block px-4 py-2.5 t-small font-semibold border-t border-border text-primary hover:bg-primary hover:text-primary-foreground" href="/#sucursales">Ver todas →</a>
+                    </div>
+                  </div>
+                </div>
                 <a class="hover:text-primary transition" href="/pages/garage-interactivo">Servicios</a>
                 <span class="text-brand-gray">|</span>
-                <a class="hover:text-primary transition" href="/neumaticos/medidas">Calculadora Neumáticos</a>
-                <a class="hover:text-primary transition" href="/pages/garage-interactivo">Mi Garage 4x4</a>
+                <a class="hover:text-primary transition" href="/pages/garage-interactivo">Ingresar</a>
+                <a class="hover:text-primary transition" href="/pages/garage-interactivo">Crear Cuenta</a>
               </nav>
             </div>
           </div>
 
-          <!-- Barra central: Logo + Buscador + Garage + Carrito -->
+          <!-- 3. Barra Principal: Logo Slanted DOBLETRACCION + Teléfono + Buscador + TU VEHICULO + Carrito -->
           <div class="border-b border-brand-charcoal py-3 md:py-4">
             <div class="container-dt">
-              <!-- Mobile bar -->
+              <!-- Vista Móvil -->
               <div class="md:hidden flex items-center gap-2 min-w-0">
-                <button
-                  class="tap-44 inline-flex items-center justify-center -ml-1 flex-shrink-0"
-                  aria-label="Abrir menú"
-                  data-dt-mobile-menu-btn
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                <button class="tap-44 inline-flex items-center justify-center -ml-1 flex-shrink-0" aria-label="Abrir menú" data-dt-mobile-menu-btn>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu h-6 w-6"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
                 </button>
-                <a aria-label="DOBLETRACCIÓN inicio" class="flex-shrink-0 min-w-0 flex items-center gap-2" href="/">
-                  <span class="inline-flex h-9 w-9 items-center justify-center bg-primary text-primary-foreground font-display text-sm tracking-tighter">
-                    DT
-                  </span>
-                  <span class="font-display uppercase tracking-tight text-base text-white">
-                    DOBLE<span class="text-primary">TRACCIÓN</span>
-                  </span>
+                <a aria-label="DOBLETRACCION inicio" class="flex-shrink-0 min-w-0" href="/">
+                  <svg viewBox="0 0 260 76" class="h-10 w-auto select-none" aria-label="DOBLETRACCION">
+                    <polygon points="14,6 252,6 238,70 2,70" fill="#0d0d0d" stroke="#f7e818" stroke-width="4" />
+                    <text x="128" y="36" text-anchor="middle" fill="#ffffff" font-family="'Archivo Black', sans-serif" font-weight="900" font-style="italic" font-size="26" letter-spacing="1">DOBLE</text>
+                    <text x="125" y="60" text-anchor="middle" fill="#f7e818" font-family="'Archivo Black', sans-serif" font-weight="900" font-style="italic" font-size="21" letter-spacing="1.5">TRACCION</text>
+                  </svg>
                 </a>
                 <div class="ml-auto flex items-center gap-2 flex-shrink-0">
-                  <button
-                    type="button"
-                    data-dt-garage-btn
-                    class="inline-flex items-center gap-1.5 rounded-[var(--radius-control)] bg-primary text-primary-foreground font-button text-xs font-bold uppercase tracking-wider hover:brightness-95 transition h-10 px-2.5 md:px-3"
-                    aria-label="Abrir mi garage 4x4"
-                  >
+                  <button type="button" data-dt-garage-btn class="inline-flex items-center gap-1.5 rounded-[var(--radius-control)] bg-primary text-primary-foreground font-button text-xs font-bold uppercase tracking-wider hover:brightness-95 transition h-10 px-2.5 md:px-3" aria-label="Abrir mi garage 4x4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car h-4 w-4 flex-shrink-0 text-primary-foreground"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
                     <span data-dt-garage-label class="text-[10px] md:text-xs">GARAGE</span>
                   </button>
-                  <a
-                    href="/pages/garage-interactivo"
-                    class="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary text-primary-foreground flex-shrink-0"
-                    aria-label="Carrito"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                  <button class="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary text-primary-foreground flex-shrink-0" aria-label="Carrito">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart h-5 w-5"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
                     <span data-dt-cart-count class="absolute -top-1 -right-1 bg-foreground text-primary t-caption rounded-full h-5 w-5 flex items-center justify-center border border-primary">0</span>
-                  </a>
-                </div>
-              </div>
-
-              <!-- Mobile search -->
-              <div class="md:hidden mt-2.5 w-full min-w-0">
-                <div class="relative w-full">
-                  <input
-                    type="search"
-                    name="q"
-                    autocomplete="off"
-                    placeholder="Busca medida (285/70R17), marca o modelo"
-                    aria-label="Buscar"
-                    class="w-full rounded-[var(--radius-control)] bg-background text-foreground font-base placeholder:text-muted-foreground/80 transition border-2 border-transparent focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 pr-20 h-11 pl-4 text-sm"
-                  />
-                  <button
-                    type="button"
-                    aria-label="Buscar"
-                    class="absolute right-1 top-1/2 -translate-y-1/2 rounded-[10px] bg-primary text-primary-foreground flex items-center justify-center font-bold hover:brightness-95 transition w-12 h-9"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                   </button>
                 </div>
               </div>
 
-              <!-- Desktop bar -->
+              <!-- Buscador Móvil -->
+              <div class="md:hidden mt-2.5 w-full min-w-0">
+                <div class="relative w-full">
+                  <input type="search" name="q" autocomplete="off" placeholder="Busca medida, marca o modelo" aria-label="Buscar" class="w-full rounded-[var(--radius-control)] bg-background text-foreground font-base placeholder:text-muted-foreground/80 transition border-2 border-transparent focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 pr-20 h-11 pl-4 text-sm" />
+                  <button type="button" aria-label="Buscar" class="absolute right-1 top-1/2 -translate-y-1/2 rounded-[10px] bg-primary text-primary-foreground flex items-center justify-center font-bold hover:brightness-95 transition w-12 h-9">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search h-4 w-4"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Vista Desktop (Idéntica a media_1790796027906.png) -->
               <div class="hidden md:flex items-center gap-4 lg:gap-6">
-                <a aria-label="DOBLETRACCIÓN inicio" class="flex-shrink-0 flex items-center gap-2.5 group" href="/">
-                  <span class="inline-flex h-11 w-11 items-center justify-center bg-primary text-primary-foreground font-display text-lg tracking-tighter">
-                    4X4
-                  </span>
-                  <div class="flex flex-col leading-none">
-                    <span class="font-display uppercase tracking-tight text-xl lg:text-2xl text-white">
-                      DOBLE<span class="text-primary">TRACCIÓN</span>
-                    </span>
-                    <span class="font-button uppercase tracking-[0.22em] text-[9px] text-white/60 mt-0.5">
-                      EQUIPAMIENTO OFF-ROAD CHILE
-                    </span>
-                  </div>
+                <a aria-label="DOBLETRACCION inicio" class="flex-shrink-0" href="/">
+                  <svg viewBox="0 0 260 76" class="h-12 lg:h-14 w-auto select-none" aria-label="DOBLETRACCION">
+                    <polygon points="14,6 252,6 238,70 2,70" fill="#0d0d0d" stroke="#f7e818" stroke-width="4" />
+                    <text x="128" y="36" text-anchor="middle" fill="#ffffff" font-family="'Archivo Black', sans-serif" font-weight="900" font-style="italic" font-size="26" letter-spacing="1">DOBLE</text>
+                    <text x="125" y="60" text-anchor="middle" fill="#f7e818" font-family="'Archivo Black', sans-serif" font-weight="900" font-style="italic" font-size="21" letter-spacing="1.5">TRACCION</text>
+                  </svg>
                 </a>
-
-                <a
-                  href="tel:+56233399330"
-                  class="hidden xl:flex items-center gap-2 font-button font-bold text-sm hover:text-primary transition flex-shrink-0"
-                >
-                  <span class="text-primary">📞</span> +56 2 3339 9330
+                <a href="tel:+56233399330" class="hidden xl:flex items-center gap-2 font-button font-bold text-sm hover:text-primary transition flex-shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone h-4 w-4 text-primary"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  +56 2 3339 9330
                 </a>
-
                 <div class="flex-1 min-w-0 max-w-3xl mx-auto">
                   <div class="relative w-full">
-                    <input
-                      type="search"
-                      name="q"
-                      autocomplete="off"
-                      placeholder="Busca medida (ej. 285/70R17), vehículo (Hilux, Ranger) o marca (Fox, Method)"
-                      aria-label="Buscar"
-                      class="w-full rounded-[var(--radius-control)] bg-background text-foreground font-base placeholder:text-muted-foreground/80 transition border-2 border-transparent focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 pr-28 h-14 pl-5 text-sm"
-                    />
-                    <button
-                      type="button"
-                      aria-label="Buscar"
-                      class="absolute right-1 top-1/2 -translate-y-1/2 rounded-[10px] bg-primary text-primary-foreground flex items-center justify-center font-bold hover:brightness-95 transition w-16 h-12"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input type="search" name="q" autocomplete="off" placeholder="Busca medida, marca o modelo" aria-label="Buscar" class="w-full rounded-[var(--radius-control)] bg-background text-foreground font-base placeholder:text-muted-foreground/80 transition border-2 border-transparent focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 pr-28 h-14 pl-5 text-sm" />
+                    <button type="button" aria-label="Buscar" class="absolute right-1 top-1/2 -translate-y-1/2 rounded-[10px] bg-primary text-primary-foreground flex items-center justify-center font-bold hover:brightness-95 transition w-16 h-12">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search h-5 w-5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                     </button>
                   </div>
                 </div>
-
                 <div class="hidden lg:block flex-shrink-0">
-                  <button
-                    type="button"
-                    data-dt-garage-btn
-                    class="inline-flex items-center gap-1.5 h-11 px-4 rounded-[var(--radius-control)] bg-primary text-primary-foreground font-button text-xs font-bold uppercase tracking-wider hover:brightness-95 transition"
-                    aria-label="Abrir mi garage 4x4"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 flex-shrink-0 text-primary-foreground"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                  <button type="button" data-dt-garage-btn class="inline-flex items-center gap-1.5 h-11 px-4 rounded-[var(--radius-control)] bg-primary text-primary-foreground font-button text-xs font-bold uppercase tracking-wider hover:brightness-95 transition" aria-label="Abrir mi garage 4x4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car h-4 w-4 flex-shrink-0 text-primary-foreground"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
                     <span data-dt-garage-label>TU VEHICULO</span>
                   </button>
                 </div>
-
-                <a
-                  href="/pages/garage-interactivo"
-                  class="relative flex items-center gap-3 flex-shrink-0"
-                  aria-label="Carrito"
-                >
+                <button class="relative flex items-center gap-3 flex-shrink-0" aria-label="Carrito">
                   <span class="relative inline-flex items-center justify-center w-11 h-11 rounded-full bg-primary text-primary-foreground">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart h-5 w-5"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
                     <span data-dt-cart-count class="absolute -top-1 -right-1 bg-foreground text-primary t-caption rounded-full h-5 w-5 flex items-center justify-center border border-primary">0</span>
                   </span>
                   <span class="hidden lg:flex flex-col items-start leading-tight">
                     <span class="t-topbar text-background/55">Tu proyecto:</span>
-                    <span class="font-button font-bold text-sm">GARAGE 4X4</span>
+                    <span data-dt-cart-total class="font-button font-bold text-sm">CLP $0</span>
                   </span>
-                </a>
+                </button>
               </div>
             </div>
           </div>
 
-          <!-- Navegación Principal Desktop con Mega-Menús -->
+          <!-- 4. Barra de Navegación + Mega-Menús Interactivos (100% DOBLETRACCION Layout + Shopify Data) -->
           <nav class="hidden lg:block">
-            <div class="container-dt flex items-stretch">
-              <div class="relative group">
-                <a
-                  href="/pages/garage-interactivo"
-                  class="flex items-center gap-3 h-14 px-6 bg-primary text-primary-foreground t-button"
+            <div class="container-dt flex items-center relative">
+              <!-- BOTÓN AMARILLO "VEHICULOS 4X4" + MEGA-MENÚ DE 4 COLUMNAS (COMO EN LA CAPTURA) -->
+              <div class="relative group/veh" id="dt-vehicles-megamenu-wrap">
+                <button
+                  type="button"
+                  id="dt-vehicles-megamenu-btn"
+                  class="flex items-center gap-3 h-12 px-6 bg-primary text-primary-foreground t-button"
+                  aria-expanded="false"
+                  aria-haspopup="menu"
                 >
                   VEHICULOS 4X4
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-                </a>
-                <div class="hidden group-hover:block absolute left-0 top-full bg-background text-foreground border border-border shadow-card-hover z-50 w-[320px] p-3">
-                  <p class="px-2 pb-2 mb-1 t-topbar uppercase text-muted-foreground border-b border-border">
-                    Modelos Populares Shopify
-                  </p>
-                  <ul class="space-y-1 text-sm font-button uppercase">
-                    <li><a class="block px-3 py-2 hover:bg-primary hover:text-primary-foreground" href="/collections/f-150-raptor">Ford F-150 Raptor</a></li>
-                    <li><a class="block px-3 py-2 hover:bg-primary hover:text-primary-foreground" href="/collections/f-150">Ford F-150</a></li>
-                    <li><a class="block px-3 py-2 hover:bg-primary hover:text-primary-foreground" href="/collections/ranger">Ford Ranger</a></li>
-                    <li><a class="block px-3 py-2 hover:bg-primary hover:text-primary-foreground" href="/collections/hilux">Toyota Hilux</a></li>
-                    <li><a class="block px-3 py-2 hover:bg-primary hover:text-primary-foreground" href="/collections/4runner">Toyota 4Runner</a></li>
-                    <li><a class="block px-3 py-2 hover:bg-primary hover:text-primary-foreground" href="/collections/tundra">Toyota Tundra</a></li>
-                    <li><a class="block px-3 py-2 hover:bg-primary hover:text-primary-foreground" href="/collections/wrangler">Jeep Wrangler</a></li>
-                    <li><a class="block px-3 py-2 hover:bg-primary hover:text-primary-foreground" href="/collections/silverado">Chevrolet Silverado</a></li>
-                    <li><a class="block px-3 py-2 hover:bg-primary hover:text-primary-foreground" href="/collections/ram-1500">RAM 1500</a></li>
-                    <li><a class="block px-3 py-2 hover:bg-primary hover:text-primary-foreground" href="/collections/l200">Mitsubishi L200</a></li>
-                  </ul>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu h-4 w-4"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+
+                <!-- MEGA-MENÚ DE 4 COLUMNAS: MARCAS | MODELOS | GENERACIONES | CONSTRUYE TU 4X4 -->
+                <div
+                  id="dt-vehicles-megamenu-panel"
+                  role="menu"
+                  class="hidden group-hover/veh:block group-focus-within/veh:block absolute left-0 top-full bg-white text-neutral-900 border border-neutral-200 shadow-2xl z-50 w-[min(1180px,95vw)] animate-in fade-in slide-in-from-top-1 duration-150"
+                >
+                  <div class="grid grid-cols-[195px_350px_280px_1fr] min-h-[540px]">
+                    <!-- Columna 1: MARCAS -->
+                    <div class="border-r border-neutral-200 p-3 bg-white">
+                      <p class="px-2 pb-2 mb-2 text-[11px] font-button font-bold uppercase tracking-wider text-neutral-400">
+                        MARCAS
+                      </p>
+                      <ul class="space-y-1">
+                        {megaMenuBrands.map((b, idx) => (
+                          <li>
+                            <button
+                              type="button"
+                              data-mm-brand-btn={b.id}
+                              class={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-sm text-left transition ${
+                                idx === 0
+                                  ? "bg-primary text-neutral-950 font-bold"
+                                  : "hover:bg-neutral-100 text-neutral-900"
+                              }`}
+                            >
+                              <span
+                                class="w-9 h-9 rounded-sm bg-white border border-neutral-200 flex items-center justify-center shrink-0 font-display text-[9px] tracking-tighter"
+                                style={`color:${b.badgeColor}`}
+                              >
+                                {b.badgeText}
+                              </span>
+                              <span class="flex-1 font-display uppercase text-xs leading-tight break-words">
+                                {b.name}
+                              </span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 opacity-60 shrink-0"><path d="m9 18 6-6-6-6"/></svg>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <!-- Columnas 2, 3 y 4 por cada Marca -->
+                    {megaMenuBrands.map((b, idx) => (
+                      <div
+                        data-mm-brand-content={b.id}
+                        class={idx === 0 ? "contents" : "hidden"}
+                      >
+                        <!-- Columna 2: MODELOS [MARCA] -->
+                        <div class="border-r border-neutral-200 p-4 flex flex-col justify-between bg-white">
+                          <div>
+                            <p class="pb-2 mb-3 text-[11px] font-button font-bold uppercase tracking-wider text-neutral-400">
+                              MODELOS {b.name}
+                            </p>
+                            <div class="grid grid-cols-2 gap-2.5 max-h-[430px] overflow-y-auto pr-1">
+                              {b.models.map((m) => (
+                                <a
+                                  href={`/collections/${m.slug}`}
+                                  data-mm-model-card
+                                  data-mm-model-name={m.name}
+                                  data-mm-model-slug={m.slug}
+                                  data-mm-model-img={m.img}
+                                  data-mm-model-gens={JSON.stringify(m.generations)}
+                                  class="group/m relative aspect-[16/10] overflow-hidden rounded-sm bg-neutral-900 block ring-1 ring-black/10 hover:ring-2 hover:ring-primary transition"
+                                >
+                                  <img
+                                    src={m.img}
+                                    alt={m.name}
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover/m:scale-105"
+                                  />
+                                  <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"></div>
+                                  {m.top && (
+                                    <span class="absolute top-1.5 right-1.5 bg-primary text-neutral-950 font-display uppercase text-[9px] px-1.5 py-0.5 rounded-[2px]">
+                                      TOP
+                                    </span>
+                                  )}
+                                  <span class="absolute bottom-1.5 left-2 right-2 font-display uppercase text-[11px] leading-tight text-white drop-shadow">
+                                    {m.name}
+                                  </span>
+                                </a>
+                              ))}
+                            </div>
+                          </div>
+                          <div class="pt-3 mt-3 border-t border-neutral-100">
+                            <a
+                              href={`/collections/${b.slug}`}
+                              class="inline-flex items-center gap-1.5 font-display uppercase text-[11px] tracking-wider text-neutral-900 hover:text-primary transition"
+                            >
+                              VER TODA {b.name} →
+                            </a>
+                          </div>
+                        </div>
+
+                        <!-- Columna 3: GENERACIONES -->
+                        <div class="border-r border-neutral-200 p-4 bg-white" data-mm-gen-box>
+                          <p class="pb-2 mb-3 text-[11px] font-button font-bold uppercase tracking-wider text-neutral-400">
+                            GENERACIONES
+                          </p>
+                          <div data-mm-gen-empty class="text-xs text-neutral-500 leading-relaxed">
+                            Pasa el mouse sobre un modelo para ver sus generaciones.
+                          </div>
+                          <div data-mm-gen-list class="hidden space-y-2"></div>
+                        </div>
+
+                        <!-- Columna 4: Panel Derecho Hero Vertical "CONSTRUYE TU [MARCA]" -->
+                        <div class="relative overflow-hidden bg-neutral-950 text-white flex flex-col justify-end p-6 min-h-[540px]">
+                          <img
+                            src={b.heroImg}
+                            alt={`Construye tu ${b.name}`}
+                            data-mm-hero-img
+                            loading="lazy"
+                            decoding="async"
+                            class="absolute inset-0 w-full h-full object-cover opacity-55 transition-all duration-500"
+                          />
+                          <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/20"></div>
+                          <div class="relative z-10">
+                            <p class="font-button uppercase text-[11px] font-bold tracking-widest text-primary mb-1">
+                              ELIGE TU MODELO
+                            </p>
+                            <h4
+                              data-mm-hero-title
+                              class="font-display uppercase text-2xl leading-none text-white mb-2"
+                            >
+                              CONSTRUYE TU {b.name}
+                            </h4>
+                            <p class="text-xs text-white/75 mb-5">
+                              Pasa el mouse sobre un modelo para continuar.
+                            </p>
+                            <a
+                              href={`/collections/${b.slug}`}
+                              data-mm-hero-link
+                              class="inline-flex items-center gap-2 bg-primary text-neutral-950 font-button font-bold uppercase text-xs tracking-wider px-4 py-2.5 rounded-sm hover:brightness-95 transition"
+                            >
+                              <span data-mm-hero-btn-text>VER TODA {b.name}</span> →
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <ul class="flex items-stretch flex-1 relative">
+              <!-- CATEGORÍAS CON MINIATURAS DE SHOPIFY E HIJOS MEGA-MENÚ -->
+              <ul class="flex items-stretch flex-1 relative ml-2">
+                <!-- 1. SUSPENSIÓN -->
                 <li class="group">
-                  <a class="flex items-center gap-2.5 h-14 px-5 t-nav transition relative hover:text-primary" href="/collections/kit-de-levante-y-suspension">
+                  <a class="flex items-center gap-2.5 h-14 px-4 t-nav transition relative hover:text-primary" href="/collections/kit-de-levante-y-suspension">
+                    <span class="w-7 h-7 rounded-sm bg-white/10 overflow-hidden flex items-center justify-center shrink-0 border border-white/15">
+                      <svg viewBox="0 0 24 24" class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3v18M18 3v18M6 8h12M6 12h12M6 16h12"/></svg>
+                    </span>
                     <span class="leading-tight">Suspensión</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-3.5 w-3.5 opacity-70"><path d="m6 9 6 6 6-6"/></svg>
                     <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform"></span>
                   </a>
+                  <div role="menu" class="hidden group-hover:block group-focus-within:block absolute left-0 top-full bg-background text-foreground border border-border shadow-card-hover z-50 w-[min(1100px,95vw)] animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div class="grid grid-cols-[250px_1fr]">
+                      <div class="border-r border-border p-3 bg-muted/20">
+                        <p class="px-2 pb-2 mb-1 t-topbar uppercase text-muted-foreground border-b border-border">Suspensión</p>
+                        <ul class="space-y-0.5">
+                          <li><a class="flex items-center justify-between px-3 py-2.5 rounded-sm bg-primary text-primary-foreground font-button uppercase font-semibold text-[13px]" href="/collections/kit-de-suspension"><span>Kit de Suspensión</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2.5 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/kit-de-levante-y-suspension"><span>Kit de Levante</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2.5 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/leveling"><span>Leveling</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2.5 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/bandeja-de-suspension"><span>Bandeja de Suspensión</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2.5 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/amortiguador-de-direccion"><span>Amortiguador de Dirección</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2.5 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/espirales-y-ballestas"><span>Espirales y Ballestas</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2.5 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/espaciadores"><span>Espaciadores</span><span>›</span></a></li>
+                        </ul>
+                      </div>
+                      <div class="p-5 flex flex-col justify-between">
+                        <div>
+                          <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-headline text-lg font-bold uppercase">Kits de Suspensión y Levante</h3>
+                            <a class="inline-flex items-center gap-1 t-topbar uppercase text-foreground hover:underline" href="/collections/kit-de-suspension">Ver todo →</a>
+                          </div>
+                          <div class="grid grid-cols-3 gap-3">
+                            <a class="group/c relative aspect-[16/10] overflow-hidden rounded-sm bg-neutral-900 block" href="/collections/fox">
+                              <img src="https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/F150_RAPTOR_G3_GRIS_3.jpg?v=1756157888&width=400&format=webp" alt="FOX Racing Shox" class="absolute inset-0 w-full h-full object-cover opacity-75 group-hover/c:scale-105 transition" />
+                              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent"></div>
+                              <span class="absolute bottom-2 left-3 font-display uppercase text-sm text-primary">FOX PERFORMANCE</span>
+                            </a>
+                            <a class="group/c relative aspect-[16/10] overflow-hidden rounded-sm bg-neutral-900 block" href="/collections/kit-de-levante-y-suspension">
+                              <img src="https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/TOYOTA_HILUX_GR_BLANCA_KO3_1.jpg?v=1755188653&width=400&format=webp" alt="0 a 2 pulgadas de Levante" class="absolute inset-0 w-full h-full object-cover opacity-75 group-hover/c:scale-105 transition" />
+                              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent"></div>
+                              <span class="absolute bottom-2 left-3 font-display uppercase text-sm text-white">0 A 2" DE LEVANTE</span>
+                            </a>
+                            <a class="group/c relative aspect-[16/10] overflow-hidden rounded-sm bg-neutral-900 block" href="/collections/kit-de-suspension">
+                              <img src="https://cdn.shopify.com/s/files/1/0802/3703/5825/collections/TUNDRARORRO1.jpg?v=1755202848&width=400&format=webp" alt="2.5 a 4 pulgadas de Levante" class="absolute inset-0 w-full h-full object-cover opacity-75 group-hover/c:scale-105 transition" />
+                              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent"></div>
+                              <span class="absolute bottom-2 left-3 font-display uppercase text-sm text-white">2.5 A 4" DE LEVANTE</span>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-border flex items-center justify-end">
+                          <a class="inline-flex items-center gap-1 font-button uppercase font-bold text-sm text-foreground hover:text-primary transition" href="/collections/kit-de-levante-y-suspension">Ver todo Suspensión →</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </li>
+
+                <!-- 2. NEUMÁTICOS -->
                 <li class="group">
-                  <a class="flex items-center gap-2.5 h-14 px-5 t-nav transition relative hover:text-primary" href="/collections/neumaticos">
+                  <a class="flex items-center gap-2.5 h-14 px-4 t-nav transition relative hover:text-primary" href="/collections/neumaticos">
+                    <span class="w-7 h-7 rounded-sm bg-white/10 overflow-hidden flex items-center justify-center shrink-0 border border-white/15">
+                      <svg viewBox="0 0 24 24" class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>
+                    </span>
                     <span class="leading-tight">Neumáticos</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-3.5 w-3.5 opacity-70"><path d="m6 9 6 6 6-6"/></svg>
                     <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform"></span>
                   </a>
+                  <div role="menu" class="hidden group-hover:block group-focus-within:block absolute left-0 top-full bg-background text-foreground border border-border shadow-card-hover z-50 w-[min(1100px,95vw)] animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div class="grid grid-cols-[250px_1fr]">
+                      <div class="border-r border-border p-3 bg-muted/20">
+                        <p class="px-2 pb-2 mb-1 t-topbar uppercase text-muted-foreground border-b border-border">Neumáticos</p>
+                        <ul class="space-y-0.5">
+                          <li><a class="flex items-center justify-between px-3 py-2.5 rounded-sm bg-primary text-primary-foreground font-button uppercase font-semibold text-[13px]" href="/collections/neumaticos"><span>Neumáticos AT (All-Terrain)</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2.5 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/neumaticos-offroad-at-y-mt"><span>Neumáticos MT (Mud-Terrain)</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2.5 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/neumaticos"><span>Neumáticos RT (Rugged-Terrain)</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2.5 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/accesorios-llantas-y-neumaticos"><span>Accesorios Llantas y Neumáticos</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2.5 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/infladores-y-desinfladores"><span>Infladores y Desinfladores</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2.5 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/tuercas-y-valvulas"><span>Tuercas y Válvulas</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2.5 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px] text-primary" href="/neumaticos/medidas"><span>Calculadora de Equivalencias</span><span>›</span></a></li>
+                        </ul>
+                      </div>
+                      <div class="p-5 flex flex-col justify-between">
+                        <div>
+                          <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-headline text-lg font-bold uppercase">Filtrar por Marca y Medida Popular</h3>
+                            <a class="inline-flex items-center gap-1 t-topbar uppercase text-foreground hover:underline" href="/collections/neumaticos">Ver todo →</a>
+                          </div>
+                          <div class="grid grid-cols-4 gap-3">
+                            <a class="p-4 border border-border hover:border-primary bg-background rounded-sm text-center font-display uppercase text-sm hover:text-primary transition" href="/collections/neumaticos?marca=BFGoodrich">BFGOODRICH</a>
+                            <a class="p-4 border border-border hover:border-primary bg-background rounded-sm text-center font-display uppercase text-sm hover:text-primary transition" href="/collections/neumaticos?marca=Maxxis">MAXXIS</a>
+                            <a class="p-4 border border-border hover:border-primary bg-background rounded-sm text-center font-display uppercase text-sm hover:text-primary transition" href="/collections/neumaticos?marca=Falken">FALKEN</a>
+                            <a class="p-4 border border-border hover:border-primary bg-background rounded-sm text-center font-display uppercase text-sm hover:text-primary transition" href="/collections/neumaticos?marca=Cooper">COOPER TIRES</a>
+                          </div>
+                          <div class="mt-4 flex flex-wrap gap-2">
+                            <a href="/collections/neumaticos?medida=265/70R17" class="px-3 py-1.5 bg-muted text-xs font-mono font-bold hover:bg-primary hover:text-primary-foreground">265/70R17</a>
+                            <a href="/collections/neumaticos?medida=285/70R17" class="px-3 py-1.5 bg-muted text-xs font-mono font-bold hover:bg-primary hover:text-primary-foreground">285/70R17</a>
+                            <a href="/collections/neumaticos?medida=315/70R17" class="px-3 py-1.5 bg-muted text-xs font-mono font-bold hover:bg-primary hover:text-primary-foreground">315/70R17</a>
+                            <a href="/collections/neumaticos?medida=35x12.5R17" class="px-3 py-1.5 bg-muted text-xs font-mono font-bold hover:bg-primary hover:text-primary-foreground">35x12.5R17</a>
+                            <a href="/collections/neumaticos?medida=275/65R18" class="px-3 py-1.5 bg-muted text-xs font-mono font-bold hover:bg-primary hover:text-primary-foreground">275/65R18</a>
+                          </div>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-border flex items-center justify-end">
+                          <a class="inline-flex items-center gap-1 font-button uppercase font-bold text-sm text-foreground hover:text-primary transition" href="/collections/neumaticos">Ver todo Neumáticos →</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </li>
+
+                <!-- 3. LLANTAS -->
                 <li class="group">
-                  <a class="flex items-center gap-2.5 h-14 px-5 t-nav transition relative hover:text-primary" href="/collections/llantas">
+                  <a class="flex items-center gap-2.5 h-14 px-4 t-nav transition relative hover:text-primary" href="/collections/llantas">
+                    <span class="w-7 h-7 rounded-sm bg-white/10 overflow-hidden flex items-center justify-center shrink-0 border border-white/15">
+                      <svg viewBox="0 0 24 24" class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></svg>
+                    </span>
                     <span class="leading-tight">Llantas</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-3.5 w-3.5 opacity-70"><path d="m6 9 6 6 6-6"/></svg>
                     <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform"></span>
                   </a>
+                  <div role="menu" class="hidden group-hover:block group-focus-within:block absolute left-0 top-full bg-background text-foreground border border-border shadow-card-hover z-50 w-[min(1100px,95vw)] animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div class="grid grid-cols-[260px_1fr]">
+                      <div class="border-r border-border p-3 bg-muted/20">
+                        <p class="px-2 pb-2 mb-1 t-topbar uppercase text-muted-foreground border-b border-border">Apernaduras en Shopify</p>
+                        <ul class="space-y-0.5 max-h-[56vh] overflow-y-auto pr-1">
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm bg-primary text-primary-foreground font-button uppercase font-semibold text-[12px]" href="/collections/6x139"><span>APERNADURA 6X139 (Hilux/Ranger)</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[12px]" href="/collections/6x13525"><span>APERNADURA 6X135 (F-150/Raptor)</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[12px]" href="/collections/5x12742"><span>APERNADURA 5X127 (Wrangler/JT)</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[12px]" href="/collections/5x1001"><span>APERNADURA 5X100 (Subaru XV)</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[12px]" href="/collections/5x1081"><span>APERNADURA 5X108 (Maverick)</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[12px]" href="/collections/5x1144"><span>APERNADURA 5X114.3</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[12px]" href="/collections/5x1201"><span>APERNADURA 5X120 (Amarok)</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[12px]" href="/collections/5x1391"><span>APERNADURA 5X139 (Jimny/RAM)</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[12px]" href="/collections/5x1502"><span>APERNADURA 5X150 (Tundra/LC200)</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[12px]" href="/collections/6x1144"><span>APERNADURA 6X114.3 (NP300)</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[12px]" href="/collections/8x1656"><span>APERNADURA 8X165 (RAM 2500)</span><span>›</span></a></li>
+                        </ul>
+                      </div>
+                      <div class="p-5 flex flex-col justify-between">
+                        <div>
+                          <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-headline text-lg font-bold uppercase">Marcas Oficiales de Llantas</h3>
+                            <a class="inline-flex items-center gap-1 t-topbar uppercase text-foreground hover:underline" href="/collections/llantas">Ver todo →</a>
+                          </div>
+                          <div class="grid grid-cols-4 gap-3">
+                            <a class="p-4 border border-border hover:border-primary bg-background rounded-sm text-center font-display uppercase text-sm hover:text-primary transition" href="/collections/llantas?marca=Method">METHOD RACE</a>
+                            <a class="p-4 border border-border hover:border-primary bg-background rounded-sm text-center font-display uppercase text-sm hover:text-primary transition" href="/collections/llantas?marca=Fuel">FUEL OFF-ROAD</a>
+                            <a class="p-4 border border-border hover:border-primary bg-background rounded-sm text-center font-display uppercase text-sm hover:text-primary transition" href="/collections/llantas?marca=KMC">KMC WHEELS</a>
+                            <a class="p-4 border border-border hover:border-primary bg-background rounded-sm text-center font-display uppercase text-sm hover:text-primary transition" href="/collections/llantas?marca=Black+Rhino">BLACK RHINO</a>
+                          </div>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-border flex items-center justify-end">
+                          <a class="inline-flex items-center gap-1 font-button uppercase font-bold text-sm text-foreground hover:text-primary transition" href="/collections/llantas">Ver todo Llantas →</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </li>
+
+                <!-- 4. MÁS -->
                 <li class="group">
-                  <a class="flex items-center gap-2.5 h-14 px-5 t-nav transition relative hover:text-primary" href="/collections/desempeno">
-                    <span class="leading-tight">Desempeño</span>
+                  <a class="flex items-center gap-2.5 h-14 px-4 t-nav transition relative hover:text-primary" href="/collections/todas-las-categorias">
+                    <span class="leading-tight">Más</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-3.5 w-3.5 opacity-70"><path d="m6 9 6 6 6-6"/></svg>
                     <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform"></span>
                   </a>
-                </li>
-                <li class="group">
-                  <a class="flex items-center gap-2.5 h-14 px-5 t-nav transition relative hover:text-primary" href="/collections/exterior">
-                    <span class="leading-tight">Exterior</span>
-                    <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform"></span>
-                  </a>
-                </li>
-                <li class="group">
-                  <a class="flex items-center gap-2.5 h-14 px-5 t-nav transition relative hover:text-primary" href="/collections/winches-y-recuperacion">
-                    <span class="leading-tight">Recuperación</span>
-                    <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform"></span>
-                  </a>
+                  <div role="menu" class="hidden group-hover:block group-focus-within:block absolute left-0 top-full bg-background text-foreground border border-border shadow-card-hover z-50 w-[min(960px,95vw)] animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div class="grid grid-cols-[250px_1fr]">
+                      <div class="border-r border-border p-3 bg-muted/20">
+                        <p class="px-2 pb-2 mb-1 t-topbar uppercase text-muted-foreground border-b border-border">Categorías 4x4</p>
+                        <ul class="space-y-0.5">
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm bg-primary text-primary-foreground font-button uppercase font-semibold text-[13px]" href="/collections/desempeno"><span>Desempeño</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/pick-up"><span>Pick-Up & Tapas</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/exterior"><span>Exterior</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/interior"><span>Interior</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/iluminacion"><span>Iluminación LED</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/outdoor-y-lifestyle"><span>Outdoor y Lifestyle</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/winches-y-recuperacion"><span>Winches y Recuperación</span><span>›</span></a></li>
+                          <li><a class="flex items-center justify-between px-3 py-2 rounded-sm hover:bg-muted font-button uppercase font-semibold text-[13px]" href="/collections/utv"><span>UTV</span><span>›</span></a></li>
+                        </ul>
+                      </div>
+                      <div class="p-5 flex flex-col justify-between">
+                        <div>
+                          <h3 class="font-headline text-lg font-bold uppercase mb-3">Equipamiento y Accesorios Off-Road</h3>
+                          <div class="grid grid-cols-3 gap-3">
+                            <a class="p-4 border border-border hover:border-primary bg-background rounded-sm font-button uppercase font-bold text-sm" href="/collections/desempeno">Escapes y Admisión →</a>
+                            <a class="p-4 border border-border hover:border-primary bg-background rounded-sm font-button uppercase font-bold text-sm" href="/collections/winches-y-recuperacion">Winches y Rescate →</a>
+                            <a class="p-4 border border-border hover:border-primary bg-background rounded-sm font-button uppercase font-bold text-sm" href="/collections/iluminacion">Barras y Focos LED →</a>
+                          </div>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-border flex items-center justify-end">
+                          <a class="inline-flex items-center gap-1 font-button uppercase font-bold text-sm text-foreground hover:text-primary transition" href="/collections/todas-las-categorias">Ver todas las categorías →</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </li>
               </ul>
 
+              <!-- Enlaces Derechos de la Barra de Navegación (OFERTAS + PROYECTOS DOBLETRACCION) -->
               <a
-                class="hidden lg:flex items-center h-14 px-4 t-nav font-normal tracking-normal text-primary hover:underline underline-offset-4 transition-colors"
-                href="/neumaticos/medidas"
+                class="hidden lg:flex items-center h-12 px-4 t-nav font-normal tracking-normal text-brand-sale/90 hover:text-brand-sale hover:underline underline-offset-4 transition-colors"
+                href="/collections/todas-las-categorias"
               >
-                CALCULADORA
+                OFERTAS
               </a>
               <a
-                class="flex items-center h-14 px-6 t-nav text-primary hover:underline underline-offset-4"
+                class="flex items-center h-12 px-6 t-nav text-primary hover:underline underline-offset-4"
                 href="/#proyectos"
               >
                 PROYECTOS DOBLETRACCION
@@ -302,12 +830,15 @@ const { seo, product, category, lcpImage } = Astro.props;
           </nav>
         </header>
 
-        <!-- Barra de Garantías y Beneficios -->
+        <!-- 5. Barra de 5 Sellos de Confianza bajo el Header -->
         <div class="hidden md:block bg-[hsl(0_0%_6%)] border-b border-white/10">
           <div class="container-dt">
             <ul class="hidden md:grid grid-cols-5 gap-4 py-2">
               <li>
                 <a class="group flex items-center gap-2 transition" href="/#sucursales">
+                  <span class="h-7 w-7 flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check h-3.5 w-3.5 text-primary/70 group-hover:text-primary transition"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                  </span>
                   <span class="min-w-0">
                     <span class="block font-button uppercase tracking-wide text-[10px] font-semibold leading-tight text-white/85 group-hover:text-primary transition">Garantía oficial</span>
                     <span class="block text-[10px] text-white/45 leading-tight truncate">Productos originales con respaldo de marca</span>
@@ -316,6 +847,9 @@ const { seo, product, category, lcpImage } = Astro.props;
               </li>
               <li>
                 <a class="group flex items-center gap-2 transition" href="/#sucursales">
+                  <span class="h-7 w-7 flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wrench h-3.5 w-3.5 text-primary/70 group-hover:text-primary transition"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                  </span>
                   <span class="min-w-0">
                     <span class="block font-button uppercase tracking-wide text-[10px] font-semibold leading-tight text-white/85 group-hover:text-primary transition">Instalación en sucursal</span>
                     <span class="block text-[10px] text-white/45 leading-tight truncate">Equipo técnico especializado 4x4</span>
@@ -324,6 +858,9 @@ const { seo, product, category, lcpImage } = Astro.props;
               </li>
               <li>
                 <a class="group flex items-center gap-2 transition" href="/#sucursales">
+                  <span class="h-7 w-7 flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck h-3.5 w-3.5 text-primary/70 group-hover:text-primary transition"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                  </span>
                   <span class="min-w-0">
                     <span class="block font-button uppercase tracking-wide text-[10px] font-semibold leading-tight text-white/85 group-hover:text-primary transition">Despacho a todo Chile</span>
                     <span class="block text-[10px] text-white/45 leading-tight truncate">Envío seguro · seguimiento online</span>
@@ -332,6 +869,9 @@ const { seo, product, category, lcpImage } = Astro.props;
               </li>
               <li>
                 <a class="group flex items-center gap-2 transition" href="/#sucursales">
+                  <span class="h-7 w-7 flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card h-3.5 w-3.5 text-primary/70 group-hover:text-primary transition"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                  </span>
                   <span class="min-w-0">
                     <span class="block font-button uppercase tracking-wide text-[10px] font-semibold leading-tight text-white/85 group-hover:text-primary transition">Hasta 12 cuotas</span>
                     <span class="block text-[10px] text-white/45 leading-tight truncate">Webpay · MercadoPago · transferencia</span>
@@ -340,6 +880,9 @@ const { seo, product, category, lcpImage } = Astro.props;
               </li>
               <li>
                 <a class="group flex items-center gap-2 transition" href="/#sucursales">
+                  <span class="h-7 w-7 flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin h-3.5 w-3.5 text-primary/70 group-hover:text-primary transition"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                  </span>
                   <span class="min-w-0">
                     <span class="block font-button uppercase tracking-wide text-[10px] font-semibold leading-tight text-white/85 group-hover:text-primary transition">3 sucursales</span>
                     <span class="block text-[10px] text-white/45 leading-tight truncate">Las Condes · Concepción · La Serena</span>
@@ -350,7 +893,7 @@ const { seo, product, category, lcpImage } = Astro.props;
           </div>
         </div>
 
-        <!-- Drawer móvil interactivo -->
+        <!-- Drawer Móvil Interactivo -->
         <div
           id="dt-mobile-drawer"
           class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm lg:hidden"
@@ -358,9 +901,11 @@ const { seo, product, category, lcpImage } = Astro.props;
           <div class="h-full w-[84%] max-w-xs bg-[hsl(var(--brand-black))] text-white border-r border-white/15 p-5 flex flex-col justify-between overflow-y-auto">
             <div>
               <div class="flex items-center justify-between border-b border-white/15 pb-4 mb-4">
-                <span class="font-display uppercase text-lg text-white">
-                  DOBLE<span class="text-primary">TRACCIÓN</span>
-                </span>
+                <svg viewBox="0 0 260 76" class="h-9 w-auto select-none" aria-label="DOBLETRACCION">
+                  <polygon points="14,6 252,6 238,70 2,70" fill="#0d0d0d" stroke="#f7e818" stroke-width="4" />
+                  <text x="128" y="36" text-anchor="middle" fill="#ffffff" font-family="'Archivo Black', sans-serif" font-weight="900" font-style="italic" font-size="26" letter-spacing="1">DOBLE</text>
+                  <text x="125" y="60" text-anchor="middle" fill="#f7e818" font-family="'Archivo Black', sans-serif" font-weight="900" font-style="italic" font-size="21" letter-spacing="1.5">TRACCION</text>
+                </svg>
                 <button
                   type="button"
                   data-dt-mobile-menu-close
@@ -371,6 +916,7 @@ const { seo, product, category, lcpImage } = Astro.props;
                 </button>
               </div>
               <nav class="space-y-2 font-button uppercase tracking-wider text-sm">
+                <a href="/pages/garage-interactivo" class="block py-2.5 border-b border-white/10 text-primary font-bold">Vehículos 4x4</a>
                 <a href="/collections/kit-de-levante-y-suspension" class="block py-2.5 border-b border-white/10 hover:text-primary">Suspensión</a>
                 <a href="/collections/neumaticos" class="block py-2.5 border-b border-white/10 hover:text-primary">Neumáticos</a>
                 <a href="/collections/llantas" class="block py-2.5 border-b border-white/10 hover:text-primary">Llantas</a>
@@ -378,7 +924,6 @@ const { seo, product, category, lcpImage } = Astro.props;
                 <a href="/collections/exterior" class="block py-2.5 border-b border-white/10 hover:text-primary">Exterior y Equipamiento</a>
                 <a href="/collections/winches-y-recuperacion" class="block py-2.5 border-b border-white/10 hover:text-primary">Winches y Recuperación</a>
                 <a href="/neumaticos/medidas" class="block py-2.5 border-b border-white/10 text-primary">Calculadora de Neumáticos</a>
-                <a href="/pages/garage-interactivo" class="block py-2.5 border-b border-white/10 text-primary">Mi Garage 4x4</a>
               </nav>
             </div>
             <div class="pt-4 border-t border-white/15 text-xs text-white/60">
@@ -395,14 +940,14 @@ const { seo, product, category, lcpImage } = Astro.props;
           </div>
         </main>
 
-        <!-- FOOTER 4X4.CL EXACTO -->
+        <!-- FOOTER COMPLETO 4X4.CL (6 COLUMNAS + CLUB 4X4 + SUCURSALES, CERO LINKS A 4X4.CL) -->
         <footer class="bg-footer text-footer-foreground bg-topo-soft">
           <div class="bg-primary text-primary-foreground">
             <div class="container-dt flex flex-col items-center justify-between gap-4 py-5 md:flex-row">
               <div class="text-center md:text-left">
                 <p class="font-display text-lg uppercase leading-none md:text-xl">Únete al club 4x4</p>
                 <p class="font-button mt-1 text-xs uppercase tracking-wide">
-                  Ofertas exclusivas, lanzamientos y proyectos DOBLETRACCIÓN en tu correo
+                  Ofertas exclusivas, lanzamientos y proyectos DOBLETRACCION en tu correo
                 </p>
               </div>
               <form class="flex w-full max-w-md md:w-auto" onsubmit="event.preventDefault();">
@@ -426,63 +971,136 @@ const { seo, product, category, lcpImage } = Astro.props;
             </div>
           </div>
 
-          <div class="container-dt grid grid-cols-1 gap-6 py-10 md:grid-cols-4">
-            <div class="md:col-span-2">
-              <div class="flex items-center gap-2.5 mb-3">
-                <span class="inline-flex h-10 w-10 items-center justify-center bg-primary text-primary-foreground font-display text-base">
-                  4X4
-                </span>
-                <span class="font-display uppercase tracking-tight text-2xl text-white">
-                  DOBLE<span class="text-primary">TRACCIÓN</span>
-                </span>
-              </div>
-              <p class="mb-4 max-w-md text-sm text-footer-foreground/70">
-                Taller especialista en equipamiento 4x4 conectado en tiempo real con nuestro catálogo Shopify. Las mejores marcas off-road, instalación profesional y respaldo técnico en Chile.
+          <div class="container-dt grid grid-cols-1 gap-4 py-8 md:grid-cols-3 md:gap-8 md:py-10 lg:grid-cols-6">
+            <div class="md:col-span-3 lg:col-span-2">
+              <svg viewBox="0 0 260 76" class="h-12 md:h-14 w-auto select-none mb-3" aria-label="DOBLETRACCION">
+                <polygon points="14,6 252,6 238,70 2,70" fill="#0d0d0d" stroke="#f7e818" stroke-width="4" />
+                <text x="128" y="36" text-anchor="middle" fill="#ffffff" font-family="'Archivo Black', sans-serif" font-weight="900" font-style="italic" font-size="26" letter-spacing="1">DOBLE</text>
+                <text x="125" y="60" text-anchor="middle" fill="#f7e818" font-family="'Archivo Black', sans-serif" font-weight="900" font-style="italic" font-size="21" letter-spacing="1.5">TRACCION</text>
+              </svg>
+              <p class="mb-3 max-w-md text-sm text-footer-foreground/70">
+                Taller especialista en equipamiento 4x4. Las mejores marcas off-road, instalación profesional y respaldo técnico en Chile.
               </p>
-              <div class="flex flex-wrap items-center gap-2 text-xs font-button uppercase text-white/80">
-                <span class="px-2.5 py-1 bg-white/10 border border-white/15">WEBPAY PLUS</span>
-                <span class="px-2.5 py-1 bg-white/10 border border-white/15">MERCADO PAGO</span>
-                <span class="px-2.5 py-1 bg-white/10 border border-white/15">VISA / MASTERCARD</span>
-                <span class="px-2.5 py-1 bg-white/10 border border-white/15">TRANSFERENCIA</span>
+              <ul class="mb-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-footer-foreground/70">
+                <li class="flex items-center gap-1.5">✓ Garantía oficial de marca</li>
+                <li class="flex items-center gap-1.5">✓ Instalación en sucursal</li>
+                <li class="flex items-center gap-1.5">✓ Despacho a todo Chile</li>
+              </ul>
+              <ul class="mb-3 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+                <li><a href="tel:+56233399330" class="flex items-center gap-2 text-footer-foreground/80 hover:text-primary">📞 +56 2 3339 9330</a></li>
+                <li><a href="mailto:contacto@dobletraccion.com" class="flex items-center gap-2 text-footer-foreground/80 hover:text-primary">✉️ contacto@dobletraccion.com</a></li>
+              </ul>
+              <div class="flex flex-wrap items-center gap-1.5 mt-3">
+                <span class="inline-flex h-8 items-center justify-center rounded-[6px] bg-white text-neutral-900 font-display text-[10px] px-2.5">VISA</span>
+                <span class="inline-flex h-8 items-center justify-center rounded-[6px] bg-white text-neutral-900 font-display text-[10px] px-2.5">MASTERCARD</span>
+                <span class="inline-flex h-8 items-center justify-center rounded-[6px] bg-white text-neutral-900 font-display text-[10px] px-2.5">AMEX</span>
+                <span class="inline-flex h-8 items-center justify-center rounded-[6px] bg-white text-neutral-900 font-display text-[10px] px-2.5">WEBPAY PLUS</span>
+                <span class="inline-flex h-8 items-center justify-center rounded-[6px] bg-white text-neutral-900 font-display text-[10px] px-2.5">MERCADO PAGO</span>
               </div>
             </div>
 
-            <div>
-              <h3 class="font-button text-sm font-bold uppercase tracking-wider text-primary mb-3">
-                Colecciones Shopify
-              </h3>
-              <ul class="space-y-2 text-sm">
-                <li><a class="hover:text-primary" href="/collections/kit-de-levante-y-suspension">Kits de Levante y Suspensión</a></li>
-                <li><a class="hover:text-primary" href="/collections/neumaticos">Neumáticos Off-Road</a></li>
-                <li><a class="hover:text-primary" href="/collections/llantas">Llantas 4x4</a></li>
-                <li><a class="hover:text-primary" href="/collections/desempeno">Desempeño y Escapes</a></li>
-                <li><a class="hover:text-primary" href="/collections/exterior">Exterior y Protección</a></li>
-                <li><a class="hover:text-primary" href="/collections/winches-y-recuperacion">Winches y Recuperación</a></li>
+            <div class="footer-section border-b border-footer-foreground/10 md:border-0">
+              <h3 class="font-button text-sm font-bold uppercase tracking-wider text-primary mb-4">Tienda</h3>
+              <ul class="space-y-1.5 text-sm">
+                <li><a class="hover:text-primary" href="/collections/kit-de-levante-y-suspension">Levante y Suspensión</a></li>
+                <li><a class="hover:text-primary" href="/collections/neumaticos">Neumáticos</a></li>
+                <li><a class="hover:text-primary" href="/collections/llantas">Llantas</a></li>
+                <li><a class="hover:text-primary" href="/collections/exterior">Exterior</a></li>
+                <li><a class="hover:text-primary" href="/collections/pick-up">Carga y Tapas</a></li>
+                <li><a class="hover:text-primary" href="/collections/iluminacion">Equipo Eléctrico y LED</a></li>
+                <li><a class="hover:text-primary" href="/collections/outdoor-y-lifestyle">Camping y Aventura</a></li>
+                <li><a class="hover:text-primary" href="/pages/garage-interactivo">Servicios de instalación</a></li>
+                <li><a class="hover:text-primary" href="/collections/todas-las-categorias">Ofertas</a></li>
               </ul>
             </div>
 
-            <div>
-              <h3 class="font-button text-sm font-bold uppercase tracking-wider text-primary mb-3">
-                Herramientas & Garage
-              </h3>
-              <ul class="space-y-2 text-sm">
-                <li><a class="hover:text-primary" href="/pages/garage-interactivo">Mi Garage Interactivo 4x4</a></li>
-                <li><a class="hover:text-primary" href="/neumaticos/medidas">Calculadora de Equivalencias</a></li>
+            <div class="footer-section border-b border-footer-foreground/10 md:border-0">
+              <h3 class="font-button text-sm font-bold uppercase tracking-wider text-primary mb-4">Herramientas</h3>
+              <ul class="space-y-1.5 text-sm">
+                <li><a class="hover:text-primary" href="/neumaticos/medidas">Medidas de neumáticos</a></li>
+                <li><a class="hover:text-primary" href="/pages/garage-interactivo">Garage interactivo</a></li>
+                <li><a class="hover:text-primary" href="/#proyectos">Proyectos 4x4</a></li>
+                <li><a class="hover:text-primary" href="/sitemap.xml">Sitemap XML</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-section border-b border-footer-foreground/10 md:border-0">
+              <h3 class="font-button text-sm font-bold uppercase tracking-wider text-primary mb-4">Vehículos Populares</h3>
+              <ul class="space-y-1.5 text-sm">
                 <li><a class="hover:text-primary" href="/collections/f-150-raptor">Ford F-150 Raptor</a></li>
-                <li><a class="hover:text-primary" href="/collections/hilux">Toyota Hilux</a></li>
+                <li><a class="hover:text-primary" href="/collections/f-150">Ford F-150</a></li>
                 <li><a class="hover:text-primary" href="/collections/ranger">Ford Ranger</a></li>
-                <li><a class="hover:text-primary" href="/sitemap.xml">Sitemap SEO Dinámico</a></li>
+                <li><a class="hover:text-primary" href="/collections/hilux">Toyota Hilux</a></li>
+                <li><a class="hover:text-primary" href="/collections/4runner">Toyota 4Runner</a></li>
+                <li><a class="hover:text-primary" href="/collections/wrangler">Jeep Wrangler</a></li>
+                <li><a class="hover:text-primary" href="/collections/silverado">Chevrolet Silverado</a></li>
+                <li><a class="hover:text-primary" href="/collections/ram-1500">RAM 1500</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-section border-b border-footer-foreground/10 md:border-0">
+              <h3 class="font-button text-sm font-bold uppercase tracking-wider text-primary mb-4">Ayuda</h3>
+              <ul class="space-y-1.5 text-sm">
+                <li><a class="hover:text-primary" href="/#sucursales">Sucursales y Contacto</a></li>
+                <li><a class="hover:text-primary" href="/#sucursales">Envíos y Despacho</a></li>
+                <li><a class="hover:text-primary" href="/#sucursales">Garantías Oficiales</a></li>
+                <li><a class="hover:text-primary" href="/#sucursales">Medios de Pago</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="border-t border-footer-foreground/10">
+            <div class="container-dt py-6">
+              <div class="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+                <h3 class="font-button text-sm font-bold uppercase tracking-wider text-primary">Sucursales</h3>
+                <a class="font-button text-xs font-bold uppercase tracking-wide text-primary hover:underline" href="/#sucursales">Ver todas las sucursales →</a>
+              </div>
+              <ul class="grid grid-cols-1 gap-x-6 gap-y-4 text-sm sm:grid-cols-3">
+                <li class="border-l-2 border-primary/40 pl-3">
+                  <a class="font-bold transition hover:text-primary" href="/#sucursales">Casa Matriz Santiago →</a>
+                  <p class="mt-1 text-xs text-footer-foreground/70">Av. Las Condes 9285-B, Las Condes, Santiago</p>
+                  <p class="mt-1 text-xs text-footer-foreground/60">Lun a Vie · 9:30 a 19:00 · Sáb 10:00 a 14:00</p>
+                </li>
+                <li class="border-l-2 border-primary/40 pl-3">
+                  <a class="font-bold transition hover:text-primary" href="/#sucursales">Sucursal Concepción →</a>
+                  <p class="mt-1 text-xs text-footer-foreground/70">Av. Pedro de Valdivia 491, Concepción</p>
+                  <p class="mt-1 text-xs text-footer-foreground/60">Lun a Vie · 9:30 a 19:00 · Sáb 10:00 a 14:00</p>
+                </li>
+                <li class="border-l-2 border-primary/40 pl-3">
+                  <a class="font-bold transition hover:text-primary" href="/#sucursales">Sucursal La Serena →</a>
+                  <p class="mt-1 text-xs text-footer-foreground/70">Av. Balmaceda 4225, La Serena</p>
+                  <p class="mt-1 text-xs text-footer-foreground/60">Lun a Vie · 9:30 a 19:00 · Sáb 10:00 a 14:00</p>
+                </li>
               </ul>
             </div>
           </div>
 
           <div class="border-t border-footer-foreground/10">
             <div class="container-dt flex flex-col items-center justify-between gap-3 py-5 text-center text-xs text-footer-foreground/60 md:flex-row md:text-left">
-              <p>© 2026 DOBLETRACCIÓN SpA · Headless Storefront sincronizado con Shopify (`dobletraccion.com`)</p>
-              <p>Líder en equipamiento 4x4 · Santiago · La Serena · Concepción</p>
+              <div class="space-y-0.5">
+                <p>© 2026 DOBLETRACCION · Todos los derechos reservados</p>
+                <p class="text-footer-foreground/50">
+                  <span class="font-bold text-footer-foreground/70">Dobletracción SpA</span> · RUT 76.920.701-5 · Av. Las Condes 9285-B, Las Condes, Santiago
+                </p>
+              </div>
+              <div class="space-y-0.5 md:text-right">
+                <p>🔒 Sitio seguro · Compra protegida</p>
+                <p>Líder en equipamiento 4x4 · Santiago · La Serena · Concepción</p>
+              </div>
             </div>
           </div>
         </footer>
+
+        <!-- Botón Flotante WhatsApp (Esquina inferior derecha igual a DOBLETRACCION) -->
+        <a
+          href="https://wa.me/56233399330"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Contactar por WhatsApp"
+          class="fixed bottom-5 right-5 z-50 h-14 w-14 rounded-full bg-[#25D366] text-white shadow-xl flex items-center justify-center hover:scale-105 transition-transform"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+        </a>
       </div>
     </div>
 
@@ -495,29 +1113,98 @@ const { seo, product, category, lcpImage } = Astro.props;
             var labels = document.querySelectorAll("[data-dt-garage-label]");
             if (rawGarage) {
               var v = JSON.parse(rawGarage);
-              var text = v && v.model ? v.model.toUpperCase() : "GARAGE";
+              var text = v && v.model ? v.model.toUpperCase() : "TU VEHICULO";
               labels.forEach(function (el) { el.textContent = text; });
-            } else {
-              labels.forEach(function (el) { el.textContent = "GARAGE"; });
             }
           } catch (e) {}
 
-          // 2. Sincronizar contador de Carrito
+          // 2. Sincronizar contador y monto de Carrito
           try {
             var rawCart = localStorage.getItem("dt_headless_cart");
             var count = 0;
+            var total = 0;
             if (rawCart) {
               var items = JSON.parse(rawCart);
               if (Array.isArray(items)) {
                 count = items.reduce(function (acc, item) { return acc + (Number(item.quantity) || 1); }, 0);
+                total = items.reduce(function (acc, item) { return acc + ((Number(item.price) || 0) * (Number(item.quantity) || 1)); }, 0);
               }
             }
             document.querySelectorAll("[data-dt-cart-count]").forEach(function (el) {
               el.textContent = String(count);
             });
+            document.querySelectorAll("[data-dt-cart-total]").forEach(function (el) {
+              el.textContent = "CLP $" + total.toLocaleString("es-CL");
+            });
           } catch (e) {}
 
-          // 3. Eventos de botón GARAGE
+          // 3. Interactividad del Mega-Menú de 4 Columnas "VEHICULOS 4X4"
+          var brandBtns = document.querySelectorAll("[data-mm-brand-btn]");
+          var brandContents = document.querySelectorAll("[data-mm-brand-content]");
+          brandBtns.forEach(function (btn) {
+            if (btn.dataset.mmBound) return;
+            btn.dataset.mmBound = "1";
+            var activateBrand = function () {
+              var targetId = btn.getAttribute("data-mm-brand-btn");
+              brandBtns.forEach(function (b) {
+                if (b.getAttribute("data-mm-brand-btn") === targetId) {
+                  b.classList.add("bg-primary", "text-neutral-950", "font-bold");
+                  b.classList.remove("hover:bg-neutral-100", "text-neutral-900");
+                } else {
+                  b.classList.remove("bg-primary", "text-neutral-950", "font-bold");
+                  b.classList.add("hover:bg-neutral-100", "text-neutral-900");
+                }
+              });
+              brandContents.forEach(function (content) {
+                if (content.getAttribute("data-mm-brand-content") === targetId) {
+                  content.classList.remove("hidden");
+                  content.classList.add("contents");
+                } else {
+                  content.classList.add("hidden");
+                  content.classList.remove("contents");
+                }
+              });
+            };
+            btn.addEventListener("mouseenter", activateBrand);
+            btn.addEventListener("click", activateBrand);
+          });
+
+          // Hover sobre modelos en Columna 2 actualiza Columna 3 (GENERACIONES) y Columna 4 (HERO)
+          document.querySelectorAll("[data-mm-model-card]").forEach(function (card) {
+            if (card.dataset.mmModelBound) return;
+            card.dataset.mmModelBound = "1";
+            card.addEventListener("mouseenter", function () {
+              var parentBrand = card.closest("[data-mm-brand-content]");
+              if (!parentBrand) return;
+              var modelName = card.getAttribute("data-mm-model-name") || "";
+              var modelSlug = card.getAttribute("data-mm-model-slug") || "";
+              var modelImg = card.getAttribute("data-mm-model-img") || "";
+              var gensRaw = card.getAttribute("data-mm-model-gens") || "[]";
+              var gens = [];
+              try { gens = JSON.parse(gensRaw); } catch (e) {}
+
+              var emptyEl = parentBrand.querySelector("[data-mm-gen-empty]");
+              var listEl = parentBrand.querySelector("[data-mm-gen-list]");
+              if (emptyEl && listEl) {
+                emptyEl.classList.add("hidden");
+                listEl.classList.remove("hidden");
+                listEl.innerHTML = gens.map(function (g) {
+                  return '<a href="/collections/' + modelSlug + '" class="flex items-center justify-between px-3 py-2.5 rounded-sm bg-neutral-100 hover:bg-primary text-neutral-900 font-button uppercase text-xs font-bold transition"><span>' + g + '</span><span>→</span></a>';
+                }).join("") + '<div class="pt-2 mt-2 border-t border-neutral-200"><a href="/collections/' + modelSlug + '" class="inline-flex items-center gap-1 font-display uppercase text-[11px] text-neutral-900 hover:text-primary">VER TODO ' + modelName + ' →</a></div>';
+              }
+
+              var heroImg = parentBrand.querySelector("[data-mm-hero-img]");
+              var heroTitle = parentBrand.querySelector("[data-mm-hero-title]");
+              var heroLink = parentBrand.querySelector("[data-mm-hero-link]");
+              var heroBtnText = parentBrand.querySelector("[data-mm-hero-btn-text]");
+              if (heroImg && modelImg) heroImg.setAttribute("src", modelImg);
+              if (heroTitle) heroTitle.textContent = "CONSTRUYE TU " + modelName;
+              if (heroLink) heroLink.setAttribute("href", "/collections/" + modelSlug);
+              if (heroBtnText) heroBtnText.textContent = "VER " + modelName;
+            });
+          });
+
+          // 4. Eventos de botón GARAGE
           document.querySelectorAll("[data-dt-garage-btn]").forEach(function (btn) {
             if (btn.dataset.bound) return;
             btn.dataset.bound = "1";
@@ -531,7 +1218,7 @@ const { seo, product, category, lcpImage } = Astro.props;
             });
           });
 
-          // 4. Buscador del Header conectado a colecciones reales de Shopify
+          // 5. Buscador del Header conectado a colecciones reales de Shopify
           document.querySelectorAll("header input[type=\"search\"][name=\"q\"]").forEach(function (input) {
             if (input.dataset.bound) return;
             input.dataset.bound = "1";
@@ -566,7 +1253,7 @@ const { seo, product, category, lcpImage } = Astro.props;
             }
           });
 
-          // 5. Menú móvil
+          // 6. Menú móvil
           var drawer = document.getElementById("dt-mobile-drawer");
           document.querySelectorAll("[data-dt-mobile-menu-btn]").forEach(function (btn) {
             if (btn.dataset.bound) return;
