@@ -77,31 +77,19 @@ const speculationRulesJson = JSON.stringify({
 <ViewTransitions fallback="swap" />
 <script type="speculationrules" is:inline set:html={speculationRulesJson} />
 
-<!-- Fuentes oficiales DOBLETRACCIÓN 4x4.cl (Archivo Black + Hind) y hoja de estilos exacta -->
-<link rel="preconnect" href="https://www.4x4.cl" crossorigin />
+<!-- Fuentes oficiales (Archivo Black + Hind) vía Google Fonts sin bloqueo CORS y hoja de estilos exacta -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://cdn.shopify.com" crossorigin />
 <link
-  rel="preload"
-  as="font"
-  type="font/woff2"
-  href="https://www.4x4.cl/fonts/archivo-black-400-latin.woff2"
-  crossorigin
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Hind:wght@400;500;600;700&display=swap"
 />
 <link
-  rel="preload"
-  as="font"
-  type="font/woff2"
-  href="https://www.4x4.cl/fonts/hind-400-latin.woff2"
-  crossorigin
+  rel="icon"
+  type="image/svg+xml"
+  href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%230a0a0a'/%3E%3Crect x='4' y='4' width='56' height='56' rx='6' fill='none' stroke='%23ffcc00' stroke-width='3'/%3E%3Ctext x='50%25' y='58%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='22' fill='%23ffcc00'%3E4X4%3C/text%3E%3C/svg%3E"
 />
-<link
-  rel="preload"
-  as="font"
-  type="font/woff2"
-  href="https://www.4x4.cl/fonts/hind-600-latin.woff2"
-  crossorigin
-/>
-<link rel="icon" type="image/png" href="https://www.4x4.cl/favicon.png" />
 <link rel="stylesheet" href="/styles/dt-4x4.css" />
 
 <!-- Optimización Crítica LCP (< 1.2s): Preload de imagen principal above-the-fold -->
